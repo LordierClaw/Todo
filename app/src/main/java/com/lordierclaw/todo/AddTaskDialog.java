@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,6 @@ public class AddTaskDialog extends BottomSheetDialog {
 
     View viewDialog;
     EditText newTaskText;
-    Spinner newTaskGroupSpinner;
     Button newTaskButton;
 
     public AddTaskDialog(@NonNull Context context) {
@@ -37,7 +37,6 @@ public class AddTaskDialog extends BottomSheetDialog {
         viewDialog = getLayoutInflater().inflate(R.layout.new_task, null);
         this.setContentView(viewDialog);
         newTaskText = viewDialog.findViewById(R.id.newTaskText);
-        newTaskGroupSpinner = viewDialog.findViewById(R.id.newTaskGroupSpinner);
         newTaskButton = viewDialog.findViewById(R.id.newTaskButton);
     }
 
