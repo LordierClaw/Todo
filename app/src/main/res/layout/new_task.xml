@@ -2,57 +2,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingBottom="10dp">
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:useDefaultMargins="true">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp">
         <TextView
             android:id="@+id/newTaskHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_task_header_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_centerVertical="true"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/newTaskText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:background="@null"
-            android:layout_columnWeight="1"
-            android:layout_marginStart="8dp"
+            android:hint="@string/default_new_task_hint"
             android:inputType="text"
-            android:hint="@string/default_new_task_hint"/>
-        <TextView
-            android:id="@+id/newTaskGroupHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_task_group_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold"/>
-        <Spinner
-            android:id="@+id/newTaskGroupSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_columnWeight="1"/>
-    </GridLayout>
+            android:background="@null"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/newTaskHeader"
+            android:layout_toStartOf="@id/newTaskButton"
+            android:layout_centerVertical="true"/>
 
-    <Button
-        android:id="@+id/newTaskButton"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/newTaskButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_add_task_button"
+            android:layout_alignParentEnd="true"
+            android:enabled="false"
+            style="@style/Widget.Material3.Button"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_task_button_text"
-        android:layout_marginHorizontal="20dp"
-        android:layout_gravity="end"
-        android:textAllCaps="false"
-        android:enabled="false"
-        style="@style/Widget.Material3.Button"/>
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:nestedScrollingEnabled="true">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectGroupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_bulleted_list_24"
+            android:text="@string/new_task_group_text"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectDateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_date_24"
+            android:text="@string/new_task_date_text"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_marginStart="15dp"/>
+    </LinearLayout>
 </LinearLayout>
