@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Toolbar">
+        <item name="android:background">@color/md_theme_dark_background</item>
+    </style>
+    <style name="Toolbar.Header">
+        <item name="android:textColor">@color/md_theme_dark_onBackground</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
+    </style>
+    <style name="Toolbar.MenuButton">
+        <item name="android:tint">@color/md_theme_dark_primary</item>
+    </style>
+</resources>

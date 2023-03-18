@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Todo Lmao</string>
+    <!--    MainActivity-->
+    <string name="todo_header">My Day</string>
+    <!--    TaskLayout-->
+    <string name="default_task_text">Task</string>
+    <string name="default_task_group">Group</string>
+    <string name="default_task_date">dd/MM/yyyy</string>
+    <!--    NewTask-->
+    <string name="new_task_header_text">New Task</string>
+    <string name="default_new_task_hint">Enter your task</string>
+    <string name="new_task_group_text">Group</string>
+    <string name="new_task_button_text">Add</string>
+
+</resources>
