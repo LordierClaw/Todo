@@ -1,5 +1,6 @@
 package com.lordierclaw.todo;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.icu.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import com.lordierclaw.todo.listener.IGroupListener;
 import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.model.Task;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class AddTaskDialog extends BottomSheetDialog {
@@ -110,7 +113,18 @@ public class AddTaskDialog extends BottomSheetDialog {
     }
 
     private void selectDateButtonOnClick() {
-        setDate(new Date());
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                calendar.set(i, i1, i2);
+                setDate(calendar.getTime());
+            }
+        }, year, month, day);
+        datePickerDialog.show();
     }
 
     private void selectGroupButtonOnClick() {
