@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingBottom="10dp">
     <RelativeLayout
@@ -17,14 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_task_header_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
             android:layout_centerVertical="true"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/newTaskText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.Material3.SearchView"
             android:hint="@string/default_new_task_hint"
             android:inputType="text"
             android:background="@null"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_bulleted_list_24"
             android:text="@string/new_task_group_text"
-            style="@style/Widget.Material3.Button.OutlinedButton.Icon" />
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/selectDateButton"
             android:layout_width="wrap_content"

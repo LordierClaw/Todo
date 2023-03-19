@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lordierclaw.todo.adapter.TaskAdapter;
+import com.lordierclaw.todo.listener.IManagerListener;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.model.Task;
@@ -41,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBehaviour() {
+        // Manager Event
+        Manager.getInstance().setManagerListener(new IManagerListener() {
+            @Override
+            public void taskAdded() {
+                if (tasksRecyclerView.getAdapter() == null) return;
+                tasksRecyclerView.getAdapter().notifyItemInserted(tasksRecyclerView.getAdapter().getItemCount()+1);
+            }
+            @Override
+            public void taskRemovedAt(int position) {
+                if (tasksRecyclerView.getAdapter() == null) return;
+                tasksRecyclerView.getAdapter().notifyItemRemoved(position);
+            }
+        });
+        // Scroll View Behaviour
         mainScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -53,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // Click Event
         newTaskFloatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

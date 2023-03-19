@@ -10,7 +10,10 @@ public class Task {
     public enum TaskGroup{
         None(""),
         Home("Home"),
-        Work("Work");
+        Work("Work"),
+        Education("Education"),
+        Personal("Personal"),
+        CollegeAndClub("College and Club");
 
         private final String name;
 
@@ -30,7 +33,7 @@ public class Task {
     private TaskGroup group;
     private boolean isCompleted;
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public Task(String name) {
         this.id = String.format("%05d", ++Counter);

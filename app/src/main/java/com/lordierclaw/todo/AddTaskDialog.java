@@ -1,6 +1,8 @@
 package com.lordierclaw.todo;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,18 +11,25 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
+import com.lordierclaw.todo.listener.IGroupListener;
+import com.lordierclaw.todo.model.Manager;
+import com.lordierclaw.todo.model.Task;
+
+import java.util.Date;
 
 public class AddTaskDialog extends BottomSheetDialog {
-
-    View viewDialog;
-    EditText newTaskText;
-    Button newTaskButton;
+    private EditText newTaskText;
+    private Button newTaskButton;
+    private MaterialButton selectGroupButton;
+    private MaterialButton selectDateButton;
+    private SelectGroupDialog selectGroupDialog;
+    private Task.TaskGroup selectedGroup = Task.TaskGroup.None;
+    private Date selectedDate = null;
 
     public AddTaskDialog(@NonNull Context context) {
         super(context);
@@ -34,23 +43,19 @@ public class AddTaskDialog extends BottomSheetDialog {
     }
 
     private void initUI() {
-        viewDialog = getLayoutInflater().inflate(R.layout.new_task, null);
-        this.setContentView(viewDialog);
+        View viewDialog = getLayoutInflater().inflate(R.layout.new_task, null);
+        setContentView(viewDialog);
         newTaskText = viewDialog.findViewById(R.id.newTaskText);
         newTaskButton = viewDialog.findViewById(R.id.newTaskButton);
+        selectGroupButton = viewDialog.findViewById(R.id.selectGroupButton);
+        selectDateButton = viewDialog.findViewById(R.id.selectDateButton);
     }
 
     private void initBehaviour() {
         // Resize dialog when keyboard is shown
         Window window = getWindow();
         if (window != null) window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //Add Task
-        newTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newTaskButtonOnClick();
-            }
-        });
+        // EditText and AddButton Behaviour
         newTaskText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -65,10 +70,68 @@ public class AddTaskDialog extends BottomSheetDialog {
             public void afterTextChanged(Editable editable) {
             }
         });
+        //Dismiss: clear content
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                reset();
+            }
+        });
+        // Click Event
+        newTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newTaskButtonOnClick();
+            }
+        });
+        selectGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectGroupButtonOnClick();
+            }
+        });
+        selectDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDateButtonOnClick();
+            }
+        });
+    }
+    private void setGroup(Task.TaskGroup group) {
+        selectedGroup = group;
+        if (group == Task.TaskGroup.None) selectGroupButton.setText(R.string.new_task_group_text);
+        else selectGroupButton.setText(selectedGroup.toString());
+    }
+
+    private void setDate(Date date) {
+        selectedDate = date;
+        if (date == null) selectDateButton.setText(R.string.new_task_date_text);
+        else selectDateButton.setText(Task.dateFormat.format(selectedDate));
+    }
+
+    private void selectDateButtonOnClick() {
+        setDate(new Date());
+    }
+
+    private void selectGroupButtonOnClick() {
+        selectGroupDialog = new SelectGroupDialog(getContext(), new IGroupListener() {
+            @Override
+            public void onClick(Task.TaskGroup taskGroup, int position) {
+                setGroup(taskGroup);
+                selectGroupDialog.dismiss();
+            }
+        });
+        selectGroupDialog.show();
+    }
+
+    private void reset() {
+        newTaskText.setText("");
+        setGroup(Task.TaskGroup.None);
+        setDate(null);
     }
 
     private void newTaskButtonOnClick() {
-        //TODO: add Task to data
+        Manager.getInstance().add(new Task(newTaskText.getText().toString(), selectedDate, selectedGroup));
         dismiss();
     }
 }

@@ -1,5 +1,7 @@
 package com.lordierclaw.todo.model;
 
+import com.lordierclaw.todo.listener.IManagerListener;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Manager {
     }
 
     private final List<Task> taskList;
-
+    private IManagerListener iManagerListener;
     private Manager() {
         taskList = new ArrayList<>();
     }
@@ -34,12 +36,19 @@ public class Manager {
         taskList.add(new Task("Pick up dry cleaning"));
     }
 
+    public void setManagerListener(IManagerListener iManagerListener) {
+        this.iManagerListener = iManagerListener;
+    }
     public void add(Task task) {
         taskList.add(task);
+        if (iManagerListener == null) return;
+        iManagerListener.taskAdded();
     }
 
     public void remove(int position) {
         taskList.remove(position);
+        if (iManagerListener == null) return;
+        iManagerListener.taskRemovedAt(position);
     }
 
     public List<Task> getData() {
