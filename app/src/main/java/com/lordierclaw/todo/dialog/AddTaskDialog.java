@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.activity;
+package com.lordierclaw.todo.dialog;
 
 import android.app.DatePickerDialog;
 import android.content.Context;

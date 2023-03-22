@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
+import com.lordierclaw.todo.dialog.AddTaskDialog;
 import com.lordierclaw.todo.listener.IManagerListener;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Manager;
