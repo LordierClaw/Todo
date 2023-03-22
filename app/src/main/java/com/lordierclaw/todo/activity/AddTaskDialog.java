@@ -1,9 +1,8 @@
-package com.lordierclaw.todo;
+package com.lordierclaw.todo.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +17,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.listener.IGroupListener;
 import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.model.Task;

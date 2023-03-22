@@ -1,4 +1,4 @@
-package com.lordierclaw.todo;
+package com.lordierclaw.todo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
 import com.lordierclaw.todo.listener.IManagerListener;
 import com.lordierclaw.todo.listener.ITaskListener;
