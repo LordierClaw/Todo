@@ -1,6 +1,7 @@
 package com.lordierclaw.todo.model;
 
 import com.lordierclaw.todo.listener.IManagerListener;
+import com.lordierclaw.todo.utils.database.TaskDatabase;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class Manager {
     }
     public void add(Task task) {
         taskList.add(task);
+        TaskDatabase.getInstance(get)
         if (iManagerListener == null) return;
         iManagerListener.taskAdded();
     }

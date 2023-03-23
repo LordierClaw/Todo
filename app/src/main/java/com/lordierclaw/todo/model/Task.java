@@ -1,11 +1,16 @@
 package com.lordierclaw.todo.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity(tableName = "task")
 public class Task {
+    @Ignore
     private static int Counter = 0;
     public enum TaskGroup{
         None(""),
@@ -28,11 +33,13 @@ public class Task {
         }
     }
 
-    private String id, name;
+    @PrimaryKey
+    private String id;
+    private String name;
     private Date date;
     private TaskGroup group;
     private boolean isCompleted;
-
+    @Ignore
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public Task(String name) {
