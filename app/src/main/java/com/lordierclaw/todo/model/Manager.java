@@ -42,7 +42,6 @@ public class Manager {
     }
     public void add(Task task) {
         taskList.add(task);
-        TaskDatabase.getInstance(get)
         if (iManagerListener == null) return;
         iManagerListener.taskAdded();
     }
