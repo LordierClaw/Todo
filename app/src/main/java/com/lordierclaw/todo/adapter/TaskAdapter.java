@@ -38,14 +38,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Task task = getItem(position);
         if (task == null) return;
-        holder.taskCheckBox.setText(task.getName());
-        holder.taskCheckBox.setChecked(task.isCompleted());
-        holder.taskDateText.setText(task.getDateString());
-        holder.taskGroupText.setText(task.getGroup().toString());
-        if (task.getDateString().equals("") && task.getGroup().toString().equals("")) {
-            holder.taskDateText.setVisibility(View.GONE);
-            holder.taskGroupText.setVisibility(View.GONE);
-        }
+        holder.bind(task);
         holder.taskCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +75,17 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
             taskCheckBox = view.findViewById(R.id.taskCheckBox);
             taskGroupText = view.findViewById(R.id.taskGroupText);
             taskDateText = view.findViewById(R.id.taskDateText);
+        }
+
+        public void bind(Task task) {
+            taskCheckBox.setText(task.getName());
+            taskCheckBox.setChecked(task.isCompleted());
+            taskDateText.setText(task.getDateString());
+            taskGroupText.setText(task.getGroup().toString());
+            if (task.getDateString().equals("") && task.getGroup().toString().equals("")) {
+                taskDateText.setVisibility(View.GONE);
+                taskGroupText.setVisibility(View.GONE);
+            }
         }
     }
 }

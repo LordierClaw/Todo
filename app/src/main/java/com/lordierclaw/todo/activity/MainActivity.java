@@ -2,32 +2,35 @@ package com.lordierclaw.todo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
-import com.lordierclaw.todo.dialog.AddTaskDialog;
-import com.lordierclaw.todo.listener.IManagerListener;
+import com.lordierclaw.todo.fragment.AddTaskDialogFragment;
 import com.lordierclaw.todo.listener.ITaskListener;
-import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.utils.database.TaskDatabase;
+import com.lordierclaw.todo.viewmodel.MainViewModel;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // UI VARIABLE
     private RelativeLayout toolbar;
     private NestedScrollView mainScrollView;
     private TaskAdapter taskAdapter;
     private RecyclerView tasksRecyclerView;
     private FloatingActionButton newTaskFloatButton;
 
-    AddTaskDialog addTaskDialog;
+    // OTHER VARIABLE
+    private AddTaskDialogFragment addTaskDialog;
+    private MainViewModel mMainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +46,11 @@ public class MainActivity extends AppCompatActivity {
         mainScrollView = findViewById(R.id.mainScrollView);
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         newTaskFloatButton = findViewById(R.id.newTaskFloatButton);
-        addTaskDialog = new AddTaskDialog(this);
+        addTaskDialog = new AddTaskDialogFragment();
+        mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 
     private void initBehaviour() {
-        // Manager Event
-        Manager.getInstance().setManagerListener(new IManagerListener() {
-            @Override
-            public void taskAdded() {
-                taskAdapter.submitList(Manager.getInstance().getData());
-            }
-            @Override
-            public void taskRemovedAt(int position) {
-                taskAdapter.submitList(Manager.getInstance().getData());
-            }
-        });
         // Scroll View Behaviour
         mainScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -72,15 +65,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Click Event
-        newTaskFloatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTaskDialog.show();
-            }
-        });
+        newTaskFloatButton.setOnClickListener(view -> addTaskDialog.show(getSupportFragmentManager(), addTaskDialog.getTag()));
     }
 
     private void setData() {
+        // Database Behaviour
         taskAdapter = new TaskAdapter(new ITaskListener() {
             @Override
             public void onClick(Task task, int position) {
@@ -92,7 +81,12 @@ public class MainActivity extends AppCompatActivity {
 //                task.setCompleted(!task.isCompleted());
             }
         });
-        taskAdapter.submitList(Manager.getInstance().getData());
+        mMainViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                taskAdapter.submitList(tasks);
+            }
+        });
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksRecyclerView.setAdapter(taskAdapter);
     }

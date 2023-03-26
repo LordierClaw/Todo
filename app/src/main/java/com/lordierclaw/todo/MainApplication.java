@@ -2,8 +2,8 @@ package com.lordierclaw.todo;
 
 import android.app.Application;
 
-import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.utils.SharedPrefsManager;
+import com.lordierclaw.todo.utils.database.TaskDatabase;
 
 public class MainApplication extends Application {
 
@@ -11,6 +11,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SharedPrefsManager.init(getApplicationContext());
-        Manager.init(getApplicationContext());
+        TaskDatabase.initExecutor(8);
     }
 }

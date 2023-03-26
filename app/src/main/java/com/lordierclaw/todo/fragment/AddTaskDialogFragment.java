@@ -1,7 +1,7 @@
-package com.lordierclaw.todo.dialog;
+package com.lordierclaw.todo.fragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,40 +14,50 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.lordierclaw.todo.R;
-import com.lordierclaw.todo.listener.IGroupListener;
-import com.lordierclaw.todo.model.Manager;
-import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
 
 import java.util.Calendar;
-import java.util.Date;
 
-public class AddTaskDialog extends BottomSheetDialog {
+public class AddTaskDialogFragment extends BottomSheetDialogFragment {
+    // UI VARIABLE
     private EditText newTaskText;
     private Button newTaskButton;
     private MaterialButton selectGroupButton;
     private MaterialButton selectDateButton;
-    private SelectGroupDialog selectGroupDialog;
-    private Task.TaskGroup selectedGroup = Task.TaskGroup.None;
-    private Date selectedDate = null;
 
-    public AddTaskDialog(@NonNull Context context) {
-        super(context);
+    // OTHER VARIABLE
+    private AddTaskDialogViewModel mViewModel;
+    private BottomSheetDialog mDialog;
+
+    public AddTaskDialogFragment() {
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        mDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(AddTaskDialogViewModel.class);
+        initUI();
+        initBehaviour();
+        return mDialog;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initUI();
-        initBehaviour();
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        reset();
     }
 
     private void initUI() {
         View viewDialog = getLayoutInflater().inflate(R.layout.new_task, null);
-        setContentView(viewDialog);
+        mDialog.setContentView(viewDialog);
         newTaskText = viewDialog.findViewById(R.id.newTaskText);
         newTaskButton = viewDialog.findViewById(R.id.newTaskButton);
         selectGroupButton = viewDialog.findViewById(R.id.selectGroupButton);
@@ -56,7 +66,7 @@ public class AddTaskDialog extends BottomSheetDialog {
 
     private void initBehaviour() {
         // Resize dialog when keyboard is shown
-        Window window = getWindow();
+        Window window = mDialog.getWindow();
         if (window != null) window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         // EditText and AddButton Behaviour
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -73,43 +83,20 @@ public class AddTaskDialog extends BottomSheetDialog {
             public void afterTextChanged(Editable editable) {
             }
         });
-        //Dismiss: clear content
-        setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                reset();
-            }
-        });
         // Click Event
-        newTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newTaskButtonOnClick();
-            }
+        newTaskButton.setOnClickListener(view -> {
+            mViewModel.addTask(String.valueOf(newTaskText.getText()));
+            dismiss();
         });
-        selectGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectGroupButtonOnClick();
-            }
-        });
-        selectDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectDateButtonOnClick();
-            }
-        });
-    }
-    private void setGroup(Task.TaskGroup group) {
-        selectedGroup = group;
-        if (group == Task.TaskGroup.None) selectGroupButton.setText(R.string.new_task_group_text);
-        else selectGroupButton.setText(selectedGroup.toString());
+        selectGroupButton.setOnClickListener(view -> selectGroupButtonOnClick());
+        selectDateButton.setOnClickListener(view -> selectDateButtonOnClick());
+        mViewModel.getSelectedGroup().observe(this, taskGroup -> selectGroupButton.setText(mViewModel.getGroupString()));
+        mViewModel.getSelectedDate().observe(this, date -> selectDateButton.setText(mViewModel.getDateString()));
     }
 
-    private void setDate(Date date) {
-        selectedDate = date;
-        if (date == null) selectDateButton.setText(R.string.new_task_date_text);
-        else selectDateButton.setText(Task.dateFormat.format(selectedDate));
+    private void selectGroupButtonOnClick() {
+        SelectGroupDialogFragment selectGroupDialogFragment = new SelectGroupDialogFragment(this);
+        selectGroupDialogFragment.show(getParentFragmentManager(), selectGroupDialogFragment.getTag());
     }
 
     private void selectDateButtonOnClick() {
@@ -121,31 +108,14 @@ public class AddTaskDialog extends BottomSheetDialog {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i, i1, i2);
-                setDate(calendar.getTime());
+                mViewModel.setDate(calendar.getTime());
             }
         }, year, month, day);
         datePickerDialog.show();
     }
 
-    private void selectGroupButtonOnClick() {
-        selectGroupDialog = new SelectGroupDialog(getContext(), new IGroupListener() {
-            @Override
-            public void onClick(Task.TaskGroup taskGroup, int position) {
-                setGroup(taskGroup);
-                selectGroupDialog.dismiss();
-            }
-        });
-        selectGroupDialog.show();
-    }
-
     private void reset() {
         newTaskText.setText("");
-        setGroup(Task.TaskGroup.None);
-        setDate(null);
-    }
-
-    private void newTaskButtonOnClick() {
-        Manager.getInstance().add(new Task(newTaskText.getText().toString(), selectedDate, selectedGroup));
-        dismiss();
+        mViewModel.resetData();
     }
 }
