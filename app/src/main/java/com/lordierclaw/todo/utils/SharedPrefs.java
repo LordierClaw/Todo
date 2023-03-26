@@ -3,11 +3,13 @@ package com.lordierclaw.todo.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 public class SharedPrefs {
     public static final String SHARED_PREFS_NAME = "TODO_SHARED_PREFS";
     private final SharedPreferences sharedPreferences;
 
-    public SharedPrefs(Context mContext) {
+    public SharedPrefs(@NonNull Context mContext) {
         sharedPreferences = mContext.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 

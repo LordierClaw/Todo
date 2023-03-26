@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lordierclaw.todo.R;
@@ -17,22 +19,11 @@ import java.util.List;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Task;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
-    private List<Task> tasks;
+public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     private final ITaskListener iTaskListener;
-    public TaskAdapter(List<Task> tasks, ITaskListener iTaskListener) {
-        this.tasks = tasks;
+    public TaskAdapter(ITaskListener iTaskListener) {
+        super(DIFF_CALLBACK);
         this.iTaskListener = iTaskListener;
-    }
-
-    public List<Task> getTasksList() {
-        return tasks;
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void setTasksList(List<Task> tasks) {
-        this.tasks = tasks;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,7 +36,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Task task = tasks.get(position);
+        final Task task = getItem(position);
         if (task == null) return;
         holder.taskCheckBox.setText(task.getName());
         holder.taskCheckBox.setChecked(task.isCompleted());
@@ -69,11 +60,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         });
     }
 
-    @Override
-    public int getItemCount() {
-        if (tasks == null) return 0;
-        return tasks.size();
-    }
+    public static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final RelativeLayout taskLayout;

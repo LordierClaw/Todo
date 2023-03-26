@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -17,10 +18,12 @@ import com.lordierclaw.todo.listener.IManagerListener;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Manager;
 import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.utils.database.TaskDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private RelativeLayout toolbar;
     private NestedScrollView mainScrollView;
+    private TaskAdapter taskAdapter;
     private RecyclerView tasksRecyclerView;
     private FloatingActionButton newTaskFloatButton;
 
@@ -48,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
         Manager.getInstance().setManagerListener(new IManagerListener() {
             @Override
             public void taskAdded() {
-                if (tasksRecyclerView.getAdapter() == null) return;
-                tasksRecyclerView.getAdapter().notifyItemInserted(tasksRecyclerView.getAdapter().getItemCount()+1);
+                taskAdapter.submitList(Manager.getInstance().getData());
             }
             @Override
             public void taskRemovedAt(int position) {
-                if (tasksRecyclerView.getAdapter() == null) return;
-                tasksRecyclerView.getAdapter().notifyItemRemoved(position);
+                taskAdapter.submitList(Manager.getInstance().getData());
             }
         });
         // Scroll View Behaviour
@@ -80,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        Manager.getInstance().generateDummyData();
-        TaskAdapter taskAdapter = new TaskAdapter(Manager.getInstance().getData(), new ITaskListener() {
+        taskAdapter = new TaskAdapter(new ITaskListener() {
             @Override
             public void onClick(Task task, int position) {
                 //TODO: Click Task to open DetailActivity
@@ -89,9 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClickCheckbox(Task task, int position) {
-                //TODO: Click TaskCheckbox to update value
+//                task.setCompleted(!task.isCompleted());
             }
         });
+        taskAdapter.submitList(Manager.getInstance().getData());
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksRecyclerView.setAdapter(taskAdapter);
     }

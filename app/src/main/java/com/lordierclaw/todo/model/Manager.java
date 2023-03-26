@@ -1,5 +1,9 @@
 package com.lordierclaw.todo.model;
 
+import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+
 import com.lordierclaw.todo.listener.IManagerListener;
 import com.lordierclaw.todo.utils.database.TaskDatabase;
 
@@ -9,50 +13,54 @@ import java.util.List;
 
 public class Manager {
     private static Manager instance;
+    private Context mContext;
+    private IManagerListener iManagerListener;
+
+    public static void init(Context mContext) {
+        instance = null;
+        instance = new Manager(mContext);
+    }
+
     public static Manager getInstance(){
         if (instance == null) instance = new Manager();
         return instance;
     }
 
-    private final List<Task> taskList;
-    private IManagerListener iManagerListener;
     private Manager() {
-        taskList = new ArrayList<>();
+
+    }
+    private Manager(Context mContext) {
+        this();
+        this.mContext = mContext;
     }
 
-    public void generateDummyData() {
-        taskList.add(new Task("Buy groceries", new Date(), Task.TaskGroup.Home));
-        taskList.add(new Task("Finish report", new Date(), Task.TaskGroup.Work));
-        taskList.add(new Task("Clean the house", new Date(), Task.TaskGroup.Home));
-        taskList.add(new Task("Call client", new Date(), Task.TaskGroup.Work));
-        taskList.add(new Task("Do laundry", new Date(), Task.TaskGroup.Home));
-        taskList.add(new Task("Prepare presentation", new Date(), Task.TaskGroup.Work));
-        taskList.add(new Task("Pay bills", null, Task.TaskGroup.Home));
-        taskList.add(new Task("Attend meeting", null, Task.TaskGroup.Work));
-        taskList.add(new Task("Go to the gym", null, Task.TaskGroup.Home));
-        taskList.add(new Task("Send email", null, Task.TaskGroup.Work));
-        taskList.add(new Task("Take out the trash"));
-        taskList.add(new Task("Buy a gift for mom"));
-        taskList.add(new Task("Call dad"));
-        taskList.add(new Task("Pick up dry cleaning"));
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
     }
 
     public void setManagerListener(IManagerListener iManagerListener) {
         this.iManagerListener = iManagerListener;
     }
+
     public void add(Task task) {
-        taskList.add(task);
+        if (mContext == null) return;
+        TaskDatabase.getInstance(mContext).taskDAO().insert(task);
         if (iManagerListener == null) return;
         iManagerListener.taskAdded();
     }
 
-    public void remove(int position) {
-        taskList.remove(position);
+    public void remove(String id) {
+        if (mContext == null) return;
+        int position = TaskDatabase.getInstance(mContext).taskDAO().delete(id);
         if (iManagerListener == null) return;
         iManagerListener.taskRemovedAt(position);
     }
 
     public List<Task> getData() {
-        return taskList;
+        return TaskDatabase.getInstance(mContext).taskDAO().getList();
     }
 }

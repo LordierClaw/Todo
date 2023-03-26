@@ -1,6 +1,7 @@
 package com.lordierclaw.todo.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -10,8 +11,6 @@ import java.util.Date;
 
 @Entity(tableName = "task")
 public class Task {
-    @Ignore
-    private static int Counter = 0;
     public enum TaskGroup{
         None(""),
         Home("Home"),
@@ -33,8 +32,8 @@ public class Task {
         }
     }
 
-    @PrimaryKey
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String name;
     private Date date;
     private TaskGroup group;
@@ -42,22 +41,12 @@ public class Task {
     @Ignore
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public Task(String name) {
-        this.id = String.format("%05d", ++Counter);
-        this.name = name;
-        this.isCompleted = false;
-        this.date = null;
-        this.group = TaskGroup.None;
-    }
-
-    public Task(String name, Date date) {
-        this(name);
-        this.date = date;
-    }
-
     public Task(String name, Date date, TaskGroup group) {
-        this(name, date);
-        this.group = group;
+        this.name = name;
+        this.date = date;
+        if (group != null) this.group = group;
+        else this.group = TaskGroup.None;
+        this.isCompleted = false;
     }
 
     public boolean isCompleted() {
@@ -68,11 +57,11 @@ public class Task {
         isCompleted = completed;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -104,4 +93,11 @@ public class Task {
         this.group = group;
     }
 
+    public boolean equals(Task task) {
+        if (task == null) return false;
+        boolean isNameEqual = name.equals(task.getName());
+        boolean isDateEqual = getDateString().equals(task.getDateString());
+        boolean isGroupEqual = group.equals(task.getGroup());
+        return isNameEqual && isDateEqual && isGroupEqual;
+    }
 }
