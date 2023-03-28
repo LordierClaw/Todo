@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.lordierclaw.todo.R;
+import com.lordierclaw.todo.fragment.AboutFragment;
 import com.lordierclaw.todo.fragment.AddTaskDialogFragment;
 import com.lordierclaw.todo.fragment.ListTaskFragment;
 import com.lordierclaw.todo.fragment.TaskDetailsDialogFragment;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private AddTaskDialogFragment addTaskDialog;
     private TaskDetailsDialogFragment taskDetailsDialog;
     private ListTaskFragment listTaskFragment;
+    private AboutFragment aboutFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         addTaskDialog = new AddTaskDialogFragment();
         taskDetailsDialog = new TaskDetailsDialogFragment();
         listTaskFragment = new ListTaskFragment();
+        aboutFragment = new AboutFragment();
         replaceFragment(listTaskFragment);
     }
 
@@ -62,23 +66,33 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int groupId = item.getGroupId();
                 int id = item.getItemId();
                 navigationView.setCheckedItem(R.id.nav_task);
                 toolbar.setTitle(item.getTitle());
-                if (id == R.id.nav_my_day) {
-                    listTaskFragment.setListType();
-                } else if (id == R.id.nav_task) {
-                    listTaskFragment.setListType(Task.TaskGroup.None);
-                } else if (id == R.id.nav_group_home) {
-                    listTaskFragment.setListType(Task.TaskGroup.Home);
-                } else if (id == R.id.nav_group_work) {
-                    listTaskFragment.setListType(Task.TaskGroup.Work);
-                } else if (id == R.id.nav_group_education) {
-                    listTaskFragment.setListType(Task.TaskGroup.Education);
-                } else if (id == R.id.nav_group_personal) {
-                    listTaskFragment.setListType(Task.TaskGroup.Personal);
-                } else if (id == R.id.nav_group_college_club) {
-                    listTaskFragment.setListType(Task.TaskGroup.CollegeAndClub);
+                if (groupId != R.id.nav_others) {
+                    newTaskFloatButton.show();
+                    replaceFragment(listTaskFragment);
+                    if (id == R.id.nav_my_day) {
+                        listTaskFragment.setListType();
+                    } else if (id == R.id.nav_task) {
+                        listTaskFragment.setListType(Task.TaskGroup.None);
+                    } else if (id == R.id.nav_group_home) {
+                        listTaskFragment.setListType(Task.TaskGroup.Home);
+                    } else if (id == R.id.nav_group_work) {
+                        listTaskFragment.setListType(Task.TaskGroup.Work);
+                    } else if (id == R.id.nav_group_education) {
+                        listTaskFragment.setListType(Task.TaskGroup.Education);
+                    } else if (id == R.id.nav_group_personal) {
+                        listTaskFragment.setListType(Task.TaskGroup.Personal);
+                    } else if (id == R.id.nav_group_college_club) {
+                        listTaskFragment.setListType(Task.TaskGroup.CollegeAndClub);
+                    }
+                } else {
+                    newTaskFloatButton.hide();
+                    if (id == R.id.nav_about) {
+                        replaceFragment(aboutFragment);
+                    }
                 }
                 mainDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -106,6 +120,6 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_view, fragment);
-        transaction.commit();
+        transaction.commitNow();
     }
 }

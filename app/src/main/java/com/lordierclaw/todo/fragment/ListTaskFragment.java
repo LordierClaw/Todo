@@ -2,6 +2,7 @@ package com.lordierclaw.todo.fragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,6 @@ import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.ListTaskViewModel;
 
 public class ListTaskFragment extends Fragment {
-
     private ListTaskViewModel mViewModel;
     private TaskAdapter taskAdapter;
     private ITaskLayoutListener iTaskLayoutListener;
@@ -46,15 +47,14 @@ public class ListTaskFragment extends Fragment {
     }
 
     public void setListType(Task.TaskGroup group) {
-        mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
+        if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
         mViewModel.setTaskListByGroup(group);
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), list -> taskAdapter.submitList(list));
     }
 
     public void setListType() {
-        mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
+        if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
         mViewModel.setTaskListMyDay();
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), list -> taskAdapter.submitList(list));
     }
-
 }

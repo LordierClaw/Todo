@@ -30,4 +30,8 @@
     <string name="default_user_name">User</string>
     <string name="default_local_account">Local Account</string>
 
+    <!--    About-->
+    <string name="about_progapp">This application is created for ProGApp Competition\nCopyright © 2023 LordierClaw</string>
+    <string name="about_default_version">Version: Unknown</string>
+
 </resources>

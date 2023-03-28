@@ -3,7 +3,7 @@
     <dimen name="default_elevation">10dp</dimen>
     <dimen name="default_corner_radius">10dp</dimen>
     <!--    SplashActivity-->
-    <dimen name="app_icon_size">120dp</dimen>
+    <dimen name="app_icon_size">128dp</dimen>
     <dimen name="app_name_text_size">20sp</dimen>
     <dimen name="app_name_margin_top">14dp</dimen>
     <!--    MainActivity-->
