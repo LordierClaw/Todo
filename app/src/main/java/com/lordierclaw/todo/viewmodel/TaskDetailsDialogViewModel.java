@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.utils.database.TaskRepository;
 
@@ -26,6 +27,18 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
             mTask = new MutableLiveData<Task>(null);
         }
         return mTask;
+    }
+
+    public String getGroupString() {
+        if (mTask.getValue() == null || mTask.getValue().getGroup() == Task.TaskGroup.None)
+            return getApplication().getResources().getString(R.string.new_task_group_text);
+        else return mTask.getValue().getGroup().toString();
+    }
+
+    public String getDateString() {
+        if (mTask.getValue() == null || mTask.getValue().getDate() == null)
+            return getApplication().getResources().getString(R.string.new_task_date_text);
+        else return mTask.getValue().getDateString();
     }
 
     public void setTaskName(String name) {
@@ -49,5 +62,10 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
     public void updateTask() {
         mRepository.update(mTask.getValue());
         mTask.setValue(mTask.getValue());
+    }
+
+    public void deleteTask() {
+        mRepository.delete(mTask.getValue());
+        mTask.setValue(null);
     }
 }

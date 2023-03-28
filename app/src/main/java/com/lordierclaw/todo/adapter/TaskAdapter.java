@@ -82,10 +82,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
             taskCheckBox.setChecked(task.isCompleted());
             taskDateText.setText(task.getDateString());
             taskGroupText.setText(task.getGroup().toString());
-            if (task.getDateString().equals("") && task.getGroup().toString().equals("")) {
-                taskDateText.setVisibility(View.GONE);
-                taskGroupText.setVisibility(View.GONE);
-            }
+            if (task.getDateString().equals("") ) taskDateText.setVisibility(View.GONE);
+            else taskDateText.setVisibility(View.VISIBLE);
+            if (task.getGroup().toString().equals("")) taskGroupText.setVisibility(View.GONE);
+            else taskGroupText.setVisibility(View.VISIBLE);
         }
     }
 }

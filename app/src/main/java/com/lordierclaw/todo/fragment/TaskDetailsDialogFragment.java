@@ -29,6 +29,7 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     private TaskDetailsDialogViewModel mViewModel;
     private EditText taskHeader;
     private TextView groupText, dateText;
+    private ImageView groupRemoveButton, dateRemoveButton, taskDeleteButton;
 
     public TaskDetailsDialogFragment() {
     }
@@ -55,19 +56,31 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
         taskHeader = mDialog.findViewById(R.id.taskDetailsHeader);
         groupText = mDialog.findViewById(R.id.taskDetailsGroupText);
         dateText = mDialog.findViewById(R.id.taskDetailsDateText);
+        groupRemoveButton = mDialog.findViewById(R.id.taskDetailsGroupRemove);
+        dateRemoveButton = mDialog.findViewById(R.id.taskDetailsDateRemove);
+        taskDeleteButton = mDialog.findViewById(R.id.taskDetailsDelete);
     }
 
     private void initBehaviour() {
         mViewModel.getTask().observe(this, new Observer<Task>() {
             @Override
             public void onChanged(Task task) {
+                if (task == null) return;
                 taskHeader.setText(task.getName());
-                groupText.setText(task.getGroup().toString());
-                dateText.setText(task.getDateString());
+                groupText.setText(mViewModel.getGroupString());
+                dateText.setText(mViewModel.getDateString());
             }
         });
         groupText.setOnClickListener(view -> selectGroupButtonOnClick());
         dateText.setOnClickListener(view -> selectDateButtonOnClick());
+        groupRemoveButton.setOnClickListener(view -> mViewModel.setTaskGroup(Task.TaskGroup.None));
+        dateRemoveButton.setOnClickListener(view -> mViewModel.setTaskDate(null));
+        taskDeleteButton.setOnClickListener(view -> deleteTask());
+    }
+
+    private void deleteTask() {
+        mViewModel.deleteTask();
+        dismiss();
     }
 
     private void selectGroupButtonOnClick() {
@@ -93,6 +106,7 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
+        if (mViewModel.getTask().getValue() == null) return;
         mViewModel.setTaskName(taskHeader.getText().toString());
     }
 }

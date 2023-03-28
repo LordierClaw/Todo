@@ -39,4 +39,12 @@ public class TaskRepository {
         });
     }
 
+    public void delete(Task task) {
+        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                mTaskDAO.delete(task);
+            }
+        });
+    }
 }
