@@ -6,11 +6,12 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity(tableName = "task")
-public class Task {
+public class Task implements Serializable {
     public enum TaskGroup{
         None(""),
         Home("Home"),

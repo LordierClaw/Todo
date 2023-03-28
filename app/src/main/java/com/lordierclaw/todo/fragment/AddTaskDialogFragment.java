@@ -21,6 +21,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.lordierclaw.todo.R;
+import com.lordierclaw.todo.listener.IGroupListener;
+import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
 
 import java.util.Calendar;
@@ -95,7 +97,9 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void selectGroupButtonOnClick() {
-        SelectGroupDialogFragment selectGroupDialogFragment = new SelectGroupDialogFragment(this);
+        SelectGroupDialogFragment selectGroupDialogFragment = new SelectGroupDialogFragment((taskGroup, position) -> {
+            mViewModel.getSelectedGroup().setValue(taskGroup);
+        });
         selectGroupDialogFragment.show(getParentFragmentManager(), selectGroupDialogFragment.getTag());
     }
 

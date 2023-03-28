@@ -15,12 +15,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.GroupAdapter;
+import com.lordierclaw.todo.listener.IGroupListener;
 import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
 
 public class SelectGroupDialogFragment extends BottomSheetDialogFragment {
-    private AddTaskDialogViewModel mViewModel;
-    public SelectGroupDialogFragment(ViewModelStoreOwner rootOwner) {
-        mViewModel = new ViewModelProvider(rootOwner).get(AddTaskDialogViewModel.class);
+    private IGroupListener iGroupListener;
+    public SelectGroupDialogFragment(IGroupListener iGroupListener) {
+        this.iGroupListener = iGroupListener;
     }
     @NonNull
     @Override
@@ -32,7 +33,7 @@ public class SelectGroupDialogFragment extends BottomSheetDialogFragment {
         // Init UI and Behaviour
         RecyclerView groupRecyclerView = dialog.findViewById(R.id.groupRecyclerView);
         GroupAdapter groupAdapter = new GroupAdapter((taskGroup, position) -> {
-            mViewModel.setGroup(taskGroup);
+            iGroupListener.onClick(taskGroup, position);
             dismiss();
         });
         if (groupRecyclerView != null) {

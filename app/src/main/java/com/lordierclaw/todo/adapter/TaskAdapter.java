@@ -42,13 +42,13 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
         holder.taskCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iTaskListener.onClickCheckbox(task, holder.getAbsoluteAdapterPosition());
+                iTaskListener.onClickCheckbox(task, holder.taskCheckBox.isChecked());
             }
         });
         holder.taskLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iTaskListener.onClick(task, holder.getAbsoluteAdapterPosition());
+                iTaskListener.onClick(task);
             }
         });
     }

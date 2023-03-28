@@ -2,6 +2,7 @@ package com.lordierclaw.todo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
 import com.lordierclaw.todo.fragment.AddTaskDialogFragment;
+import com.lordierclaw.todo.fragment.TaskDetailsDialogFragment;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.MainViewModel;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     // OTHER VARIABLE
     private AddTaskDialogFragment addTaskDialog;
+    private TaskDetailsDialogFragment taskDetailsDialog;
     private MainViewModel mMainViewModel;
 
     @Override
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         newTaskFloatButton = findViewById(R.id.newTaskFloatButton);
         addTaskDialog = new AddTaskDialogFragment();
+        taskDetailsDialog = new TaskDetailsDialogFragment();
         mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 
@@ -72,15 +76,19 @@ public class MainActivity extends AppCompatActivity {
         // Database Behaviour
         taskAdapter = new TaskAdapter(new ITaskListener() {
             @Override
-            public void onClick(Task task, int position) {
-                //TODO: Click Task to open DetailActivity
+            public void onClick(Task task) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("TASK_TO_SHOW_DETAILS", task);
+                taskDetailsDialog.setArguments(bundle);
+                taskDetailsDialog.show(getSupportFragmentManager(), taskDetailsDialog.getTag());
             }
 
             @Override
-            public void onClickCheckbox(Task task, int position) {
-//                task.setCompleted(!task.isCompleted());
+            public void onClickCheckbox(Task task, boolean isChecked) {
+                mMainViewModel.updateTaskChecked(task, isChecked);
             }
         });
+
         mMainViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {

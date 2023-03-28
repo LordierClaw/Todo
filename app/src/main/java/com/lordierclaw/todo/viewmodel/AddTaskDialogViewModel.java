@@ -36,6 +36,7 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
         }
         return selectedDate;
     }
+
     public String getGroupString() {
         if (selectedGroup.getValue() == null || selectedGroup.getValue() == Task.TaskGroup.None)
             return getApplication().getResources().getString(R.string.new_task_group_text);
@@ -63,5 +64,9 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
 
     public void addTask(String taskName) {
         mRepository.insert(new Task(taskName, getSelectedDate().getValue(), getSelectedGroup().getValue()));
+    }
+
+    public void updateTask(Task task) {
+        mRepository.update(task);
     }
 }

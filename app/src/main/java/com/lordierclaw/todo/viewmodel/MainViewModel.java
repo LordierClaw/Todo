@@ -25,7 +25,12 @@ public class MainViewModel extends AndroidViewModel {
         return mAllTask;
     }
 
-    public void insert(Task task) {
+    public void insertTask(Task task) {
         mRepository.insert(task);
+    }
+
+    public void updateTaskChecked(Task task, boolean isChecked) {
+        task.setCompleted(isChecked);
+        mRepository.update(task);
     }
 }
