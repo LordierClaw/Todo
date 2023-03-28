@@ -9,14 +9,14 @@
     android:layout_marginVertical="@dimen/card_view_margin_vertical"
     android:layout_marginHorizontal="@dimen/card_view_margin_horizontal">
     <RelativeLayout
-        android:id="@+id/taskLayout"
+        android:id="@+id/adapter_task_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="10dp"
         android:paddingHorizontal="8dp">
         <CheckBox
-            android:id="@+id/taskCheckBox"
+            android:id="@+id/adapter_task_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_task_text"
@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/taskCheckBox">
+            android:layout_below="@+id/adapter_task_checkbox">
             <TextView
                 android:id="@+id/taskGroupText"
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp" />
             <TextView
-                android:id="@+id/taskDateText"
+                android:id="@+id/adapter_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_task_date"

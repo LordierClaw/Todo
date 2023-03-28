@@ -13,7 +13,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="20dp">
         <TextView
-            android:id="@+id/newTaskHeader"
+            android:id="@+id/new_task_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_task_header_text"
@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:textStyle="bold" />
         <EditText
-            android:id="@+id/newTaskText"
+            android:id="@+id/new_task_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Material3.SearchView"
@@ -29,12 +29,12 @@
             android:inputType="text"
             android:background="@null"
             android:layout_marginStart="12dp"
-            android:layout_toEndOf="@id/newTaskHeader"
-            android:layout_toStartOf="@id/newTaskButton"
+            android:layout_toEndOf="@id/new_task_header"
+            android:layout_toStartOf="@id/new_task_btn"
             android:layout_centerVertical="true"/>
 
         <Button
-            android:id="@+id/newTaskButton"
+            android:id="@+id/new_task_btn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/ic_add_task_button"
@@ -50,14 +50,14 @@
         android:paddingHorizontal="20dp"
         android:nestedScrollingEnabled="true">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectGroupButton"
+            android:id="@+id/selec_group_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_bulleted_list_24"
             android:text="@string/new_task_group_text"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectDateButton"
+            android:id="@+id/select_date_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_date_24"

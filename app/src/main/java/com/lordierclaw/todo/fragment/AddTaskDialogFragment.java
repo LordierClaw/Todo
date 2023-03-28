@@ -21,8 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.lordierclaw.todo.R;
-import com.lordierclaw.todo.listener.IGroupListener;
-import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
 
 import java.util.Calendar;
@@ -58,12 +56,12 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void initUI() {
-        View viewDialog = getLayoutInflater().inflate(R.layout.new_task, null);
+        View viewDialog = getLayoutInflater().inflate(R.layout.dialog_new_task, null);
         mDialog.setContentView(viewDialog);
-        newTaskText = viewDialog.findViewById(R.id.newTaskText);
-        newTaskButton = viewDialog.findViewById(R.id.newTaskButton);
-        selectGroupButton = viewDialog.findViewById(R.id.selectGroupButton);
-        selectDateButton = viewDialog.findViewById(R.id.selectDateButton);
+        newTaskText = viewDialog.findViewById(R.id.new_task_text);
+        newTaskButton = viewDialog.findViewById(R.id.new_task_btn);
+        selectGroupButton = viewDialog.findViewById(R.id.selec_group_btn);
+        selectDateButton = viewDialog.findViewById(R.id.select_date_btn);
     }
 
     private void initBehaviour() {

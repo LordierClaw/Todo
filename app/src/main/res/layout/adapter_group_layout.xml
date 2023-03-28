@@ -7,18 +7,18 @@
     android:layout_marginStart="20dp"
     android:layout_marginTop="13dp">
         <ImageView
-            android:id="@+id/groupIcon"
+            android:id="@+id/adapter_group_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_bulleted_list_24"
             android:layout_centerVertical="true"
             app:tint="@color/md_theme_light_primary" />
         <TextView
-            android:id="@+id/groupName"
+            android:id="@+id/adapter_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_task_group"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/groupIcon"/>
+            android:layout_toEndOf="@+id/adapter_group_icon"/>
 </RelativeLayout>

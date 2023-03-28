@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,17 +53,20 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void initUI() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.task_details, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_task_details, null);
         mDialog.setContentView(view);
-        taskHeader = mDialog.findViewById(R.id.taskDetailsHeader);
-        groupText = mDialog.findViewById(R.id.taskDetailsGroupText);
+        taskHeader = mDialog.findViewById(R.id.task_details_header);
+        groupText = mDialog.findViewById(R.id.task_details_group_text);
         dateText = mDialog.findViewById(R.id.taskDetailsDateText);
-        groupRemoveButton = mDialog.findViewById(R.id.taskDetailsGroupRemove);
-        dateRemoveButton = mDialog.findViewById(R.id.taskDetailsDateRemove);
-        taskDeleteButton = mDialog.findViewById(R.id.taskDetailsDelete);
+        groupRemoveButton = mDialog.findViewById(R.id.task_details_group_remove_btn);
+        dateRemoveButton = mDialog.findViewById(R.id.task_details_date_remove_btn);
+        taskDeleteButton = mDialog.findViewById(R.id.task_details_delete_btn);
     }
 
     private void initBehaviour() {
+        // Resize dialog when keyboard is shown
+        Window window = mDialog.getWindow();
+        if (window != null) window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         mViewModel.getTask().observe(this, new Observer<Task>() {
             @Override
             public void onChanged(Task task) {

@@ -1,6 +1,5 @@
 package com.lordierclaw.todo.adapter;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lordierclaw.todo.R;
-import java.util.List;
 
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Task;
@@ -30,7 +28,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.task_layout, parent, false);
+        View view = inflater.inflate(R.layout.adapter_task_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -71,10 +69,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
         private final TextView taskGroupText, taskDateText;
         public ViewHolder(@NonNull View view) {
             super(view);
-            taskLayout = view.findViewById(R.id.taskLayout);
-            taskCheckBox = view.findViewById(R.id.taskCheckBox);
+            taskLayout = view.findViewById(R.id.adapter_task_layout);
+            taskCheckBox = view.findViewById(R.id.adapter_task_checkbox);
             taskGroupText = view.findViewById(R.id.taskGroupText);
-            taskDateText = view.findViewById(R.id.taskDateText);
+            taskDateText = view.findViewById(R.id.adapter_date_text);
         }
 
         public void bind(Task task) {

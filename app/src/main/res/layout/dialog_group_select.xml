@@ -14,11 +14,11 @@
         android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
         android:layout_marginTop="20dp"/>
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/mainScrollView"
+        android:id="@+id/group_select_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/groupRecyclerView"
+            android:id="@+id/group_select_rcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

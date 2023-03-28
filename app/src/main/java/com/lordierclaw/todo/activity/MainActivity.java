@@ -2,8 +2,6 @@ package com.lordierclaw.todo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +17,6 @@ import com.lordierclaw.todo.fragment.TaskDetailsDialogFragment;
 import com.lordierclaw.todo.listener.ITaskListener;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.MainViewModel;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // UI VARIABLE
@@ -46,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
-        mainScrollView = findViewById(R.id.mainScrollView);
-        tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
-        newTaskFloatButton = findViewById(R.id.newTaskFloatButton);
+        mainScrollView = findViewById(R.id.main_scroll_view);
+        tasksRecyclerView = findViewById(R.id.tasks_rcv);
+        newTaskFloatButton = findViewById(R.id.new_task_float_btn);
         addTaskDialog = new AddTaskDialogFragment();
         taskDetailsDialog = new TaskDetailsDialogFragment();
         mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -56,16 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBehaviour() {
         // Scroll View Behaviour
-        mainScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > tasksRecyclerView.getPaddingTop()) {
-                    newTaskFloatButton.hide();
-                    toolbar.setElevation(12);
-                } else {
-                    newTaskFloatButton.show();
-                    toolbar.setElevation(0);
-                }
+        mainScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > tasksRecyclerView.getPaddingTop()) {
+                newTaskFloatButton.hide();
+                toolbar.setElevation(12);
+            } else {
+                newTaskFloatButton.show();
+                toolbar.setElevation(0);
             }
         });
         // Click Event
@@ -89,12 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mMainViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-                taskAdapter.submitList(tasks);
-            }
-        });
+        mMainViewModel.getAllTask().observe(this, tasks -> taskAdapter.submitList(tasks));
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksRecyclerView.setAdapter(taskAdapter);
     }
