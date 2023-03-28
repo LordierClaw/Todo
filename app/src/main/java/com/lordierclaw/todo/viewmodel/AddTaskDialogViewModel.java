@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.utils.database.TaskRepository;
+import com.lordierclaw.todo.viewmodel.utils.database.TaskRepository;
 
 import java.util.Date;
 

@@ -1,43 +1,37 @@
 package com.lordierclaw.todo.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.view.MenuItem;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.lordierclaw.todo.R;
-import com.lordierclaw.todo.adapter.TaskAdapter;
 import com.lordierclaw.todo.fragment.AddTaskDialogFragment;
+import com.lordierclaw.todo.fragment.ListTaskFragment;
 import com.lordierclaw.todo.fragment.TaskDetailsDialogFragment;
-import com.lordierclaw.todo.listener.ITaskListener;
+import com.lordierclaw.todo.listener.ITaskLayoutListener;
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     // UI VARIABLE
     private DrawerLayout mainDrawerLayout;
-    private AppBarLayout toolbarLayout;
     private MaterialToolbar toolbar;
-    private NestedScrollView mainScrollView;
-    private TaskAdapter taskAdapter;
-    private RecyclerView tasksRecyclerView;
+    private NavigationView navigationView;
     private FloatingActionButton newTaskFloatButton;
 
     // OTHER VARIABLE
     private AddTaskDialogFragment addTaskDialog;
     private TaskDetailsDialogFragment taskDetailsDialog;
-    private MainViewModel mMainViewModel;
+    private ListTaskFragment listTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +39,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initUI();
         initBehaviour();
-        setData();
     }
 
     private void initUI() {
         mainDrawerLayout = findViewById(R.id.main_drawer_layout);
-        toolbarLayout = findViewById(R.id.toolbar_layout);
+        navigationView = findViewById(R.id.main_nav_view);
         toolbar = findViewById(R.id.toolbar);
-        mainScrollView = findViewById(R.id.main_scroll_view);
-        tasksRecyclerView = findViewById(R.id.tasks_rcv);
         newTaskFloatButton = findViewById(R.id.new_task_float_btn);
         addTaskDialog = new AddTaskDialogFragment();
         taskDetailsDialog = new TaskDetailsDialogFragment();
-        mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        listTaskFragment = new ListTaskFragment();
+        replaceFragment(listTaskFragment);
     }
 
     private void initBehaviour() {
@@ -67,11 +59,32 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         // Click Event
         newTaskFloatButton.setOnClickListener(view -> addTaskDialog.show(getSupportFragmentManager(), addTaskDialog.getTag()));
-    }
-
-    private void setData() {
-        // Database Behaviour
-        taskAdapter = new TaskAdapter(new ITaskListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                navigationView.setCheckedItem(R.id.nav_task);
+                if (id == R.id.nav_my_day) {
+                    listTaskFragment.setListType();
+                } else if (id == R.id.nav_task) {
+                    listTaskFragment.setListType(Task.TaskGroup.None);
+                } else if (id == R.id.nav_group_home) {
+                    listTaskFragment.setListType(Task.TaskGroup.Home);
+                } else if (id == R.id.nav_group_work) {
+                    listTaskFragment.setListType(Task.TaskGroup.Work);
+                } else if (id == R.id.nav_group_education) {
+                    listTaskFragment.setListType(Task.TaskGroup.Education);
+                } else if (id == R.id.nav_group_personal) {
+                    listTaskFragment.setListType(Task.TaskGroup.Personal);
+                } else if (id == R.id.nav_group_college_club) {
+                    listTaskFragment.setListType(Task.TaskGroup.CollegeAndClub);
+                }
+                mainDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+        // List Task Event
+        listTaskFragment.setTaskLayoutListener(new ITaskLayoutListener() {
             @Override
             public void onClick(Task task) {
                 Bundle bundle = new Bundle();
@@ -79,15 +92,19 @@ public class MainActivity extends AppCompatActivity {
                 taskDetailsDialog.setArguments(bundle);
                 taskDetailsDialog.show(getSupportFragmentManager(), taskDetailsDialog.getTag());
             }
-
-            @Override
-            public void onClickCheckbox(Task task, boolean isChecked) {
-                mMainViewModel.updateTaskChecked(task, isChecked);
-            }
         });
+    }
 
-        mMainViewModel.getAllTask().observe(this, tasks -> taskAdapter.submitList(tasks));
-        tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksRecyclerView.setAdapter(taskAdapter);
+    @Override
+    public void onBackPressed() {
+        if (mainDrawerLayout == null) return;
+        if (mainDrawerLayout.isDrawerOpen(GravityCompat.START)) mainDrawerLayout.closeDrawer(GravityCompat.START);
+        else super.onBackPressed();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_view, fragment);
+        transaction.commit();
     }
 }

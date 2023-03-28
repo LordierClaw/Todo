@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.utils.database;
+package com.lordierclaw.todo.viewmodel.utils.database;
 
 import android.content.Context;
 
@@ -6,19 +6,26 @@ import androidx.lifecycle.LiveData;
 
 import com.lordierclaw.todo.model.Task;
 
+import java.util.Date;
 import java.util.List;
 
 public class TaskRepository {
     private final TaskDAO mTaskDAO;
-    private LiveData<List<Task>> mAllTask;
 
     public TaskRepository(Context context) {
         mTaskDAO = TaskDatabase.getInstance(context).taskDAO();
-        mAllTask = mTaskDAO.getList();
     }
 
-    public LiveData<List<Task>> getAllTask() {
-        return mAllTask;
+    public LiveData<List<Task>> getTaskInGroup(Task.TaskGroup group) {
+        return mTaskDAO.getList(group);
+    }
+
+    public LiveData<List<Task>> getTaskMyDay(Date date) {
+        return mTaskDAO.getList(date);
+    }
+
+    public LiveData<List<Task>> getAll() {
+        return mTaskDAO.getAll();
     }
 
     public void insert(Task task) {

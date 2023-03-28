@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.utils.database;
+package com.lordierclaw.todo.viewmodel.utils.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.lordierclaw.todo.model.Task;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -23,6 +24,11 @@ public interface TaskDAO {
     @Update
     void update(Task task);
 
+    @Query("SELECT * FROM task WHERE `group` = :taskGroup")
+    LiveData<List<Task>> getList(Task.TaskGroup taskGroup);
+
+    @Query("SELECT * FROM task WHERE `date` = :date")
+    LiveData<List<Task>> getList(Date date);
     @Query("SELECT * FROM task")
-    LiveData<List<Task>> getList();
+    LiveData<List<Task>> getAll();
 }

@@ -2,7 +2,6 @@ package com.lordierclaw.todo.listener;
 
 import com.lordierclaw.todo.model.Task;
 
-public interface ITaskListener {
+public interface ITaskLayoutListener {
     void onClick(Task task);
-    void onClickCheckbox(Task task, boolean isChecked);
 }

@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
+import com.lordierclaw.todo.viewmodel.utils.TaskCalendar;
 
 import java.util.Calendar;
 
@@ -102,17 +103,9 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void selectDateButtonOnClick() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                calendar.set(i, i1, i2);
-                mViewModel.setDate(calendar.getTime());
-            }
-        }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, y, m, d) -> {
+            mViewModel.setDate(TaskCalendar.getDate(y, m, d));
+        }, TaskCalendar.getCurrentYear(), TaskCalendar.getCurrentMonth(), TaskCalendar.getCurrentDay());
         datePickerDialog.show();
     }
 

@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.TaskDetailsDialogViewModel;
+import com.lordierclaw.todo.viewmodel.utils.TaskCalendar;
 
 import java.util.Calendar;
 
@@ -33,7 +34,12 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     private TextView groupText, dateText;
     private ImageView groupRemoveButton, dateRemoveButton, taskDeleteButton;
 
-    public TaskDetailsDialogFragment() {
+    public static TaskDetailsDialogFragment getInstance(Task task) {
+        TaskDetailsDialogFragment fragment = new TaskDetailsDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("TASK_TO_SHOW_DETAILS", task);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @NonNull
@@ -57,7 +63,7 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
         mDialog.setContentView(view);
         taskHeader = mDialog.findViewById(R.id.task_details_header);
         groupText = mDialog.findViewById(R.id.task_details_group_text);
-        dateText = mDialog.findViewById(R.id.taskDetailsDateText);
+        dateText = mDialog.findViewById(R.id.task_details_date_text);
         groupRemoveButton = mDialog.findViewById(R.id.task_details_group_remove_btn);
         dateRemoveButton = mDialog.findViewById(R.id.task_details_date_remove_btn);
         taskDeleteButton = mDialog.findViewById(R.id.task_details_delete_btn);
@@ -94,17 +100,9 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void selectDateButtonOnClick() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                calendar.set(i, i1, i2);
-                mViewModel.setTaskDate(calendar.getTime());
-            }
-        }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, y, m, d) -> {
+            mViewModel.setTaskDate(TaskCalendar.getDate(y, m, d));
+        }, TaskCalendar.getCurrentYear(), TaskCalendar.getCurrentMonth(), TaskCalendar.getCurrentDay());
         datePickerDialog.show();
     }
 

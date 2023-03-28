@@ -14,14 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lordierclaw.todo.R;
 
-import com.lordierclaw.todo.listener.ITaskListener;
+import com.lordierclaw.todo.listener.ITaskCheckBoxListener;
+import com.lordierclaw.todo.listener.ITaskLayoutListener;
 import com.lordierclaw.todo.model.Task;
 
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
-    private final ITaskListener iTaskListener;
-    public TaskAdapter(ITaskListener iTaskListener) {
+    private ITaskLayoutListener iTaskLayoutListener;
+    private ITaskCheckBoxListener iTaskCheckBoxListener;
+    public TaskAdapter() {
         super(DIFF_CALLBACK);
-        this.iTaskListener = iTaskListener;
     }
 
     @NonNull
@@ -32,22 +33,24 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    public void setTaskLayoutListener(ITaskLayoutListener listener) {
+        iTaskLayoutListener = listener;
+    }
+
+    public void setTaskCheckBoxListener(ITaskCheckBoxListener listener) {
+        iTaskCheckBoxListener = listener;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Task task = getItem(position);
         if (task == null) return;
         holder.bind(task);
-        holder.taskCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iTaskListener.onClickCheckbox(task, holder.taskCheckBox.isChecked());
-            }
+        holder.taskCheckBox.setOnClickListener(view -> {
+            if (iTaskCheckBoxListener != null) iTaskCheckBoxListener.onClick(task, holder.taskCheckBox.isChecked());
         });
-        holder.taskLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iTaskListener.onClick(task);
-            }
+        holder.taskLayout.setOnClickListener(view -> {
+            if (iTaskLayoutListener != null) iTaskLayoutListener.onClick(task);
         });
     }
 
@@ -71,8 +74,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
             super(view);
             taskLayout = view.findViewById(R.id.adapter_task_layout);
             taskCheckBox = view.findViewById(R.id.adapter_task_checkbox);
-            taskGroupText = view.findViewById(R.id.taskGroupText);
-            taskDateText = view.findViewById(R.id.adapter_date_text);
+            taskGroupText = view.findViewById(R.id.adapter_task_group_text);
+            taskDateText = view.findViewById(R.id.adapter_task_date_text);
         }
 
         public void bind(Task task) {

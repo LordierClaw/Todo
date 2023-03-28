@@ -25,20 +25,12 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/main_scroll_view"
+        <FrameLayout
+            android:id="@+id/main_fragment_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar_layout">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tasks_rcv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/main_view_padding_top"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:nestedScrollingEnabled="false"
-                android:focusable="false"/>
-        </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/new_task_float_btn"
             android:layout_width="wrap_content"
@@ -51,6 +43,7 @@
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/main_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

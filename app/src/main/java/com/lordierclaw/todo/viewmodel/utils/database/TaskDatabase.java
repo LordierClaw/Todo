@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.utils.database;
+package com.lordierclaw.todo.viewmodel.utils.database;
 
 import android.content.Context;
 

@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/adapter_task_checkbox">
             <TextView
-                android:id="@+id/taskGroupText"
+                android:id="@+id/adapter_task_group_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_task_group"
@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp" />
             <TextView
-                android:id="@+id/adapter_date_text"
+                android:id="@+id/adapter_task_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_task_date"
