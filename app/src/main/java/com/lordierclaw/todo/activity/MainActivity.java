@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 navigationView.setCheckedItem(R.id.nav_task);
+                toolbar.setTitle(item.getTitle());
                 if (id == R.id.nav_my_day) {
                     listTaskFragment.setListType();
                 } else if (id == R.id.nav_task) {
