@@ -1,14 +1,20 @@
 package com.lordierclaw.todo.activity;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
@@ -20,7 +26,9 @@ import com.lordierclaw.todo.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     // UI VARIABLE
-    private RelativeLayout toolbar;
+    private DrawerLayout mainDrawerLayout;
+    private AppBarLayout toolbarLayout;
+    private MaterialToolbar toolbar;
     private NestedScrollView mainScrollView;
     private TaskAdapter taskAdapter;
     private RecyclerView tasksRecyclerView;
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        mainDrawerLayout = findViewById(R.id.main_drawer_layout);
+        toolbarLayout = findViewById(R.id.toolbar_layout);
         toolbar = findViewById(R.id.toolbar);
         mainScrollView = findViewById(R.id.main_scroll_view);
         tasksRecyclerView = findViewById(R.id.tasks_rcv);
@@ -51,16 +61,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBehaviour() {
-        // Scroll View Behaviour
-        mainScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > tasksRecyclerView.getPaddingTop()) {
-                newTaskFloatButton.hide();
-                toolbar.setElevation(12);
-            } else {
-                newTaskFloatButton.show();
-                toolbar.setElevation(0);
-            }
-        });
+        // Navigation Drawer Toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mainDrawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+        mainDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         // Click Event
         newTaskFloatButton.setOnClickListener(view -> addTaskDialog.show(getSupportFragmentManager(), addTaskDialog.getTag()));
     }

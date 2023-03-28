@@ -37,7 +37,7 @@
             android:id="@+id/new_task_btn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/ic_add_task_button"
+            android:background="@drawable/ic_add_task_button_32"
             android:layout_alignParentEnd="true"
             android:enabled="false"
             style="@style/Widget.Material3.Button"/>

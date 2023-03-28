@@ -2,7 +2,7 @@
     <string name="app_name">Todo Lmao</string>
     <!--    MainActivity-->
     <string name="todo_header">My Day</string>
-    <!--    TaskLayout-->
+    <!--    Adapter Task Layout-->
     <string name="default_task_text">Task</string>
     <string name="default_task_group">Group</string>
     <string name="default_task_date">dd/MM/yyyy</string>
@@ -11,5 +11,23 @@
     <string name="default_new_task_hint">Enter your task</string>
     <string name="new_task_group_text">Select group</string>
     <string name="new_task_date_text">Set due date</string>
+
+    <!--    Navigation Drawer State-->
+    <string name="nav_open">Open Menu</string>
+    <string name="nav_close">Close Menu</string>
+    <!--    Navigation Drawer Items-->
+    <string name="nav_my_day">My Day</string>
+    <string name="nav_group_none">Tasks</string>
+    <string name="nav_group_home">Home</string>
+    <string name="nav_group_work">Work</string>
+    <string name="nav_group_education">Education</string>
+    <string name="nav_group_personal">Personal</string>
+    <string name="nav_group_college_club">College and Club</string>
+    <string name="nav_about">About</string>
+    <string name="nav_settings">Settings</string>
+
+    <!--    User-->
+    <string name="default_user_name">User</string>
+    <string name="default_local_account">Local Account</string>
 
 </resources>

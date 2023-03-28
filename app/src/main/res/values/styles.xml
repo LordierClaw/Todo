@@ -11,4 +11,14 @@
     <style name="Toolbar.MenuButton">
         <item name="android:tint">@color/md_theme_light_primary</item>
     </style>
+
+    <style name="NavDrawerHeader">
+        <item name="android:background">@color/md_theme_light_primaryContainer</item>
+    </style>
+    <style name="NavDrawerHeader.Name" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
+    </style>
+    <style name="NavDrawerHeader.Email" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
+    </style>
 </resources>

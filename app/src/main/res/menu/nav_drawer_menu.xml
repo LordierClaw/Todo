@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/nav_main"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_my_day"
+            android:title="@string/nav_my_day"
+            android:icon="@drawable/ic_my_day_24"/>
+        <item android:id="@+id/nav_task"
+            android:title="@string/nav_group_none"
+            android:icon="@drawable/ic_home_24"/>
+    </group>
+
+    <group android:id="@+id/nav_group_tasks">
+        <item android:id="@+id/nav_group_home"
+            android:title="@string/nav_group_home"
+            android:icon="@drawable/ic_bulleted_list_24"/>
+        <item android:id="@+id/nav_group_work"
+            android:title="@string/nav_group_work"
+            android:icon="@drawable/ic_bulleted_list_24"/>
+        <item android:id="@+id/nav_group_education"
+            android:title="@string/nav_group_education"
+            android:icon="@drawable/ic_bulleted_list_24"/>
+        <item android:id="@+id/nav_group_personal"
+            android:title="@string/nav_group_personal"
+            android:icon="@drawable/ic_bulleted_list_24"/>
+        <item android:id="@+id/nav_group_college_club"
+            android:title="@string/nav_group_college_club"
+            android:icon="@drawable/ic_bulleted_list_24"/>
+    </group>
+
+    <group android:id="@+id/nav_others">
+        <item android:id="@+id/nav_about"
+            android:title="@string/nav_about"
+            android:icon="@drawable/ic_about_24"/>
+        <item android:id="@+id/nav_settings"
+            android:title="@string/nav_settings"
+            android:icon="@drawable/ic_settings_24"/>
+    </group>
+
+</menu>

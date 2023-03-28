@@ -2,42 +2,34 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    tools:openDrawer="start">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-        <RelativeLayout
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            style="@style/Toolbar">
-            <ImageView
-                android:id="@+id/menu_button"
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.AppBarLayout">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_menu_open"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/menu_button_padding_horizontal"
-                style="@style/Toolbar.MenuButton"/>
-            <TextView
-                android:id="@+id/main_task_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/todo_header"
-                style="@style/Toolbar.Header"
-                android:layout_toEndOf="@+id/menu_button"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+                app:title="@string/nav_my_day"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/main_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            android:layout_below="@id/toolbar_layout">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tasks_rcv"
                 android:layout_width="wrap_content"
@@ -54,9 +46,14 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/new_task_button_margin"
-            android:src="@drawable/ic_add_button"
+            android:src="@drawable/ic_add_button_32"
             android:elevation="@dimen/default_elevation"/>
     </RelativeLayout>
 
-
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_drawer_header"
+        app:menu="@menu/nav_drawer_menu"/>
 </androidx.drawerlayout.widget.DrawerLayout>
