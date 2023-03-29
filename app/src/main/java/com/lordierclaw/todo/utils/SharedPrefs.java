@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.viewmodel.utils;
+package com.lordierclaw.todo.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

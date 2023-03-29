@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,9 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.TaskDetailsDialogViewModel;
-import com.lordierclaw.todo.viewmodel.utils.TaskCalendar;
-
-import java.util.Calendar;
+import com.lordierclaw.todo.utils.TaskCalendar;
 
 public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     private BottomSheetDialog mDialog;

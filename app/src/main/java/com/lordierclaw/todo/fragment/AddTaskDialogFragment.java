@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -22,9 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.viewmodel.AddTaskDialogViewModel;
-import com.lordierclaw.todo.viewmodel.utils.TaskCalendar;
-
-import java.util.Calendar;
+import com.lordierclaw.todo.utils.TaskCalendar;
 
 public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     // UI VARIABLE

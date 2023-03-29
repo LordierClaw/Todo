@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.viewmodel.utils.TaskCalendar;
-import com.lordierclaw.todo.viewmodel.utils.database.TaskRepository;
+import com.lordierclaw.todo.utils.TaskCalendar;
+import com.lordierclaw.todo.utils.database.TaskRepository;
 
 import java.util.List;
 

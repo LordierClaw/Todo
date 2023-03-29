@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.viewmodel.utils.database;
+package com.lordierclaw.todo.utils.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

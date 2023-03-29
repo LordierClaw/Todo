@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.viewmodel.utils;
+package com.lordierclaw.todo.utils;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         else super.onBackPressed();
     }
 
-    public void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_view, fragment);
         transaction.commitNow();
