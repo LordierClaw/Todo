@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Task.class}, version = 1, exportSchema = false)
 @TypeConverters({TaskConverters.class})
 public abstract class TaskDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "task.db";
+    public static final String DATABASE_NAME = "task.db";
     private static volatile TaskDatabase instance;
 
     private static ExecutorService databaseExecutor;

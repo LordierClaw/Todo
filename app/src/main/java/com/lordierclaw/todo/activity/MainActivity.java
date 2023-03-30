@@ -19,6 +19,7 @@ import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.fragment.AboutFragment;
 import com.lordierclaw.todo.fragment.AddTaskDialogFragment;
 import com.lordierclaw.todo.fragment.ListTaskFragment;
+import com.lordierclaw.todo.fragment.SettingsFragment;
 import com.lordierclaw.todo.fragment.TaskDetailsDialogFragment;
 import com.lordierclaw.todo.listener.ITaskLayoutListener;
 import com.lordierclaw.todo.model.Task;
@@ -35,10 +36,18 @@ public class MainActivity extends AppCompatActivity {
     private TaskDetailsDialogFragment taskDetailsDialog;
     private ListTaskFragment listTaskFragment;
     private AboutFragment aboutFragment;
+    private SettingsFragment settingsFragment;
+    private static final String MENU_ID_TAG = "navigation_menu_id";
+    private int navigationDefaultId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            navigationDefaultId = savedInstanceState.getInt(MENU_ID_TAG);
+            Log.d("onSave_recreate", String.valueOf(navigationDefaultId));
+        }
+        else navigationDefaultId = 0;
         setContentView(R.layout.activity_main);
         initUI();
         initBehaviour();
@@ -53,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         taskDetailsDialog = new TaskDetailsDialogFragment();
         listTaskFragment = new ListTaskFragment();
         aboutFragment = new AboutFragment();
-        replaceFragment(listTaskFragment);
+        settingsFragment = new SettingsFragment();
     }
 
     private void initBehaviour() {
@@ -63,41 +72,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         // Click Event
         newTaskFloatButton.setOnClickListener(view -> addTaskDialog.show(getSupportFragmentManager(), addTaskDialog.getTag()));
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int groupId = item.getGroupId();
-                int id = item.getItemId();
-                navigationView.setCheckedItem(R.id.nav_task);
-                toolbar.setTitle(item.getTitle());
-                if (groupId != R.id.nav_others) {
-                    newTaskFloatButton.show();
-                    replaceFragment(listTaskFragment);
-                    if (id == R.id.nav_my_day) {
-                        listTaskFragment.setListType();
-                    } else if (id == R.id.nav_task) {
-                        listTaskFragment.setListType(Task.TaskGroup.None);
-                    } else if (id == R.id.nav_group_home) {
-                        listTaskFragment.setListType(Task.TaskGroup.Home);
-                    } else if (id == R.id.nav_group_work) {
-                        listTaskFragment.setListType(Task.TaskGroup.Work);
-                    } else if (id == R.id.nav_group_education) {
-                        listTaskFragment.setListType(Task.TaskGroup.Education);
-                    } else if (id == R.id.nav_group_personal) {
-                        listTaskFragment.setListType(Task.TaskGroup.Personal);
-                    } else if (id == R.id.nav_group_college_club) {
-                        listTaskFragment.setListType(Task.TaskGroup.CollegeAndClub);
-                    }
-                } else {
-                    newTaskFloatButton.hide();
-                    if (id == R.id.nav_about) {
-                        replaceFragment(aboutFragment);
-                    }
-                }
-                mainDrawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(item -> navItemSelected(item));
         // List Task Event
         listTaskFragment.setTaskLayoutListener(new ITaskLayoutListener() {
             @Override
@@ -110,6 +85,53 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private boolean navItemSelected(@NonNull MenuItem item) {
+        int groupId = item.getGroupId();
+        int id = item.getItemId();
+        navigationView.setCheckedItem(item);
+        toolbar.setTitle(item.getTitle());
+        if (groupId != R.id.nav_others) {
+            newTaskFloatButton.show();
+            replaceFragment(listTaskFragment);
+            if (id == R.id.nav_my_day) {
+                listTaskFragment.setListType();
+            } else if (id == R.id.nav_task) {
+                listTaskFragment.setListType(Task.TaskGroup.None);
+            } else if (id == R.id.nav_group_home) {
+                listTaskFragment.setListType(Task.TaskGroup.Home);
+            } else if (id == R.id.nav_group_work) {
+                listTaskFragment.setListType(Task.TaskGroup.Work);
+            } else if (id == R.id.nav_group_education) {
+                listTaskFragment.setListType(Task.TaskGroup.Education);
+            } else if (id == R.id.nav_group_personal) {
+                listTaskFragment.setListType(Task.TaskGroup.Personal);
+            } else if (id == R.id.nav_group_college_club) {
+                listTaskFragment.setListType(Task.TaskGroup.CollegeAndClub);
+            }
+        } else {
+            newTaskFloatButton.hide();
+            if (id == R.id.nav_about) {
+                replaceFragment(aboutFragment);
+            } else if (id == R.id.nav_settings) {
+                replaceFragment(settingsFragment);
+            }
+        }
+        mainDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_view, fragment);
+        transaction.commitNow();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        navItemSelected(navigationView.getMenu().getItem(navigationDefaultId));
+    }
+
     @Override
     public void onBackPressed() {
         if (mainDrawerLayout == null) return;
@@ -117,9 +139,11 @@ public class MainActivity extends AppCompatActivity {
         else super.onBackPressed();
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment_view, fragment);
-        transaction.commitNow();
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (navigationView.getCheckedItem() != null && navigationView.getCheckedItem().getItemId() == R.id.nav_settings) {
+            outState.putInt(MENU_ID_TAG, 7);
+        }
+        super.onSaveInstanceState(outState);
     }
 }

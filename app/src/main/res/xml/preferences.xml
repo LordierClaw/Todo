@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.PreferenceCategory android:title="@string/settings_account_group">
+        <androidx.preference.Preference
+            android:key="@string/key_account_log"
+            android:title="@string/settings_account_login"
+            android:summary="@string/settings_local_account_summary"/>
+        <androidx.preference.Preference
+            android:key="@string/key_account_sync"
+            android:title="@string/settings_account_sync"/>
+        <androidx.preference.Preference
+            android:key="@string/key_account_change_pfp"
+            android:title="@string/settings_account_change_pfp"/>
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/settings_general_group">
+        <androidx.preference.SwitchPreference
+            android:key="@string/key_dark_mode"
+            android:title="@string/settings_dark_mode" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/settings_debug_group">
+        <androidx.preference.Preference
+            android:key="@string/key_generate_dummy_data"
+            android:title="@string/settings_generate_dummy_data"/>
+        <androidx.preference.Preference
+            android:key="@string/key_delete_all_task"
+            android:title="@string/settings_delete_all_task"/>
+        <androidx.preference.Preference
+            android:key="@string/key_clear_data"
+            android:title="@string/settings_clear_data"/>
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

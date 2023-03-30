@@ -11,9 +11,11 @@ import java.util.List;
 
 public class TaskRepository {
     private final TaskDAO mTaskDAO;
+    private Context mContext;
 
     public TaskRepository(Context context) {
-        mTaskDAO = TaskDatabase.getInstance(context).taskDAO();
+        mContext = context;
+        mTaskDAO = TaskDatabase.getInstance(mContext).taskDAO();
     }
 
     public LiveData<List<Task>> getTaskInGroup(Task.TaskGroup group) {
@@ -54,4 +56,14 @@ public class TaskRepository {
             }
         });
     }
+
+    public void deleteAllData() {
+        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                TaskDatabase.getInstance(mContext).clearAllTables();
+            }
+        });
+    }
+
 }

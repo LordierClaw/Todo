@@ -24,6 +24,8 @@ import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.viewmodel.TaskDetailsDialogViewModel;
 import com.lordierclaw.todo.utils.TaskCalendar;
 
+import java.util.Date;
+
 public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     private BottomSheetDialog mDialog;
     private TaskDetailsDialogViewModel mViewModel;
@@ -97,9 +99,20 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void selectDateButtonOnClick() {
+        int year, month, day;
+        if (mViewModel.getTask().getValue() != null) {
+            Date date = mViewModel.getTask().getValue().getDate();
+            year = TaskCalendar.getYear(date);
+            month = TaskCalendar.getMonth(date);
+            day = TaskCalendar.getDay(date);
+        } else {
+            year = TaskCalendar.getCurrentYear();
+            month = TaskCalendar.getCurrentMonth();
+            day = TaskCalendar.getCurrentDay();
+        }
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, y, m, d) -> {
-            mViewModel.setTaskDate(TaskCalendar.getDate(y, m, d));
-        }, TaskCalendar.getCurrentYear(), TaskCalendar.getCurrentMonth(), TaskCalendar.getCurrentDay());
+            mViewModel.setTaskDate(TaskCalendar.getDate(y, m+1, d));
+        }, year, month-1, day);
         datePickerDialog.show();
     }
 

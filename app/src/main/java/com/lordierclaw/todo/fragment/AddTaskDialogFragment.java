@@ -100,9 +100,10 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void selectDateButtonOnClick() {
+        // Note: month count from 0
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, y, m, d) -> {
-            mViewModel.setDate(TaskCalendar.getDate(y, m, d));
-        }, TaskCalendar.getCurrentYear(), TaskCalendar.getCurrentMonth(), TaskCalendar.getCurrentDay());
+            mViewModel.setDate(TaskCalendar.getDate(y, m+1, d));
+        }, TaskCalendar.getCurrentYear(), TaskCalendar.getCurrentMonth()-1, TaskCalendar.getCurrentDay());
         datePickerDialog.show();
     }
 

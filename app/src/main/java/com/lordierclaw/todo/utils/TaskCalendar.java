@@ -1,5 +1,7 @@
 package com.lordierclaw.todo.utils;
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,20 +11,41 @@ public class TaskCalendar {
     }
 
     public static int getCurrentMonth() {
-        return Calendar.getInstance().get(Calendar.MONTH);
+        // Note: month count from 0
+        return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
 
     public static int getCurrentDay() {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
+    public static int getYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public static int getMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH)+1;
+    }
+
+    public static int getDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    @NonNull
     public static Date getDate(int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth, 0, 0, 0);
+        calendar.set(year, month-1, dayOfMonth, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
 
+    @NonNull
     public static Date getNow() {
         Calendar calendar = Calendar.getInstance();
         int y, m, d;
