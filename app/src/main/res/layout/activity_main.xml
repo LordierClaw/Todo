@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar_layout">
         </FrameLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/new_task_float_btn"
             android:layout_width="wrap_content"
