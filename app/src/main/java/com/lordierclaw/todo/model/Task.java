@@ -1,8 +1,7 @@
 package com.lordierclaw.todo.model;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
+import android.annotation.SuppressLint;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -13,27 +12,6 @@ import java.util.Date;
 
 @Entity(tableName = "task")
 public class Task implements Serializable {
-    public enum TaskGroup{
-        None(""),
-        Home("Home"),
-        Work("Work"),
-        Education("Education"),
-        Personal("Personal"),
-        CollegeAndClub("College and Club");
-
-        private final String name;
-
-        TaskGroup(String name) {
-            this.name = name;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
-
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String name;
@@ -46,8 +24,7 @@ public class Task implements Serializable {
     public Task(String name, Date date, TaskGroup group) {
         this.name = name;
         this.date = date;
-        if (group != null) this.group = group;
-        else this.group = TaskGroup.None;
+        this.group = group;
         this.isCompleted = false;
     }
 

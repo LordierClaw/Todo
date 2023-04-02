@@ -33,7 +33,7 @@
     <!--    About-->
     <string name="about_progapp">This application is created for ProGApp Competition\nCopyright © 2023 LordierClaw</string>
     <string name="about_default_version">Version: Unknown</string>
-    
+
     <!--    Settings-->
     <string name="settings_account_group">Account</string>
     <string name="settings_account_change_pfp">Change profile picture</string>
@@ -57,5 +57,7 @@
     <string name="key_generate_dummy_data">settings_generate_dummy_data</string>
     <string name="key_delete_all_task">settings_delete_all_task</string>
     <string name="key_clear_data">settings_clear_data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

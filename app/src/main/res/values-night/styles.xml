@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Toolbar">
         <item name="android:background">@color/md_theme_dark_background</item>
     </style>
@@ -20,5 +20,27 @@
     </style>
     <style name="NavDrawerHeader.Email" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textColor">@color/md_theme_dark_onPrimaryContainer</item>
+    </style>
+
+    <style name="NavItem">
+        <item name="cardCornerRadius">28dp</item>
+        <item name="cardBackgroundColor" tools:ignore="PrivateResource">@color/m3_navigation_item_background_color</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+    <style name="NavItem.Title" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    <style name="NavItem.Icon">
+        <item name="tint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="NavItem.Checked" parent="NavItem">
+        <item name="cardBackgroundColor">?attr/colorPrimary</item>
+    </style>
+    <style name="NavItem.Title.Checked" parent="NavItem.Title">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+    <style name="NavItem.Icon.Checked" parent="NavItem.Icon">
+        <item name="tint">?attr/colorOnPrimary</item>
     </style>
 </resources>

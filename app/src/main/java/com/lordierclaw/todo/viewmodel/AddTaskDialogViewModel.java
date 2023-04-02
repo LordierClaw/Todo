@@ -8,14 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.utils.database.TaskRepository;
+import com.lordierclaw.todo.model.TaskGroup;
+import com.lordierclaw.todo.utils.database.task.TaskRepository;
 
 import java.util.Date;
 
 public class AddTaskDialogViewModel extends AndroidViewModel {
 
     private final TaskRepository mRepository;
-    private MutableLiveData<Task.TaskGroup> selectedGroup;
+    private MutableLiveData<TaskGroup> selectedGroup;
     private MutableLiveData<Date> selectedDate;
 
     public AddTaskDialogViewModel(@NonNull Application application) {
@@ -23,9 +24,9 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
         mRepository = new TaskRepository(application.getApplicationContext());
     }
 
-    public MutableLiveData<Task.TaskGroup> getSelectedGroup() {
+    public MutableLiveData<TaskGroup> getSelectedGroup() {
         if (selectedGroup == null) {
-            selectedGroup = new MutableLiveData<Task.TaskGroup>(Task.TaskGroup.None);
+            selectedGroup = new MutableLiveData<TaskGroup>(null);
         }
         return selectedGroup;
     }
@@ -38,9 +39,9 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
     }
 
     public String getGroupString() {
-        if (selectedGroup.getValue() == null || selectedGroup.getValue() == Task.TaskGroup.None)
+        if (selectedGroup.getValue() == null || selectedGroup.getValue() == null)
             return getApplication().getResources().getString(R.string.new_task_group_text);
-        else return selectedGroup.getValue().toString();
+        else return selectedGroup.getValue().getName();
     }
 
     public String getDateString() {
@@ -49,7 +50,7 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
         else return Task.dateFormat.format(selectedDate.getValue());
     }
 
-    public void setGroup(Task.TaskGroup group) {
+    public void setGroup(TaskGroup group) {
         selectedGroup.setValue(group);
     }
 
@@ -58,7 +59,7 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
     }
 
     public void resetData() {
-        setGroup(Task.TaskGroup.None);
+        setGroup(null);
         setDate(null);
     }
 

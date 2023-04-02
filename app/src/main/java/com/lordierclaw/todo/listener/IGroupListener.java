@@ -1,7 +1,7 @@
 package com.lordierclaw.todo.listener;
 
-import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.model.TaskGroup;
 
 public interface IGroupListener {
-    void onClick(Task.TaskGroup taskGroup, int position);
+    void onClick(TaskGroup taskGroup, int position);
 }

@@ -19,6 +19,7 @@ import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.adapter.TaskAdapter;
 import com.lordierclaw.todo.listener.ITaskLayoutListener;
 import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.model.TaskGroup;
 import com.lordierclaw.todo.viewmodel.ListTaskViewModel;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class ListTaskFragment extends Fragment {
         }
     }
 
-    public void setListType(Task.TaskGroup group) {
+    public void setListType(TaskGroup group) {
         if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
         mViewModel.setTaskListByGroup(group);
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), tasks -> submitList(tasks));

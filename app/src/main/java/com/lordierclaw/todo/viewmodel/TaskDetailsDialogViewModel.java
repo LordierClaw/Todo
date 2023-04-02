@@ -8,7 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
-import com.lordierclaw.todo.utils.database.TaskRepository;
+import com.lordierclaw.todo.model.TaskGroup;
+import com.lordierclaw.todo.utils.database.task.TaskRepository;
 
 import java.util.Date;
 
@@ -30,7 +31,7 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
     }
 
     public String getGroupString() {
-        if (mTask.getValue() == null || mTask.getValue().getGroup() == Task.TaskGroup.None)
+        if (mTask.getValue() == null || mTask.getValue().getGroup() == null)
             return getApplication().getResources().getString(R.string.new_task_group_text);
         else return mTask.getValue().getGroup().toString();
     }
@@ -47,7 +48,7 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
         updateTask();
     }
 
-    public void setTaskGroup(Task.TaskGroup group) {
+    public void setTaskGroup(TaskGroup group) {
         if (mTask.getValue() == null) return;
         mTask.getValue().setGroup(group);
         updateTask();

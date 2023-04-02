@@ -7,8 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.model.TaskGroup;
 import com.lordierclaw.todo.utils.TaskCalendar;
-import com.lordierclaw.todo.utils.database.TaskRepository;
+import com.lordierclaw.todo.utils.database.task.TaskRepository;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ListTaskViewModel extends AndroidViewModel {
         return mTaskList;
     }
 
-    public void setTaskListByGroup(Task.TaskGroup group) {
+    public void setTaskListByGroup(TaskGroup group) {
         mTaskList = mRepository.getTaskInGroup(group);
     }
     public void setTaskListMyDay() {

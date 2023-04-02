@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.utils;
+package com.lordierclaw.todo.utils.sharedprefs;
 
 import android.content.Context;
 

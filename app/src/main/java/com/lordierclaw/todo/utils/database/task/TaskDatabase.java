@@ -1,4 +1,4 @@
-package com.lordierclaw.todo.utils.database;
+package com.lordierclaw.todo.utils.database.task;
 
 import android.content.Context;
 
@@ -19,6 +19,7 @@ public abstract class TaskDatabase extends RoomDatabase {
     private static volatile TaskDatabase instance;
 
     private static ExecutorService databaseExecutor;
+
     public static void initExecutor(int nThreads) {
          databaseExecutor = Executors.newFixedThreadPool(nThreads);
     }

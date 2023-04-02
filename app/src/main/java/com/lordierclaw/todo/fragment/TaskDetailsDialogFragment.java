@@ -83,7 +83,7 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
         });
         groupText.setOnClickListener(view -> selectGroupButtonOnClick());
         dateText.setOnClickListener(view -> selectDateButtonOnClick());
-        groupRemoveButton.setOnClickListener(view -> mViewModel.setTaskGroup(Task.TaskGroup.None));
+        groupRemoveButton.setOnClickListener(view -> mViewModel.setTaskGroup(null));
         dateRemoveButton.setOnClickListener(view -> mViewModel.setTaskDate(null));
         taskDeleteButton.setOnClickListener(view -> deleteTask());
     }

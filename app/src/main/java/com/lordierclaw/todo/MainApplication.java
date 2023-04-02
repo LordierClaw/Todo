@@ -5,8 +5,9 @@ import android.app.Application;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.lordierclaw.todo.model.User;
-import com.lordierclaw.todo.utils.SharedPrefsManager;
-import com.lordierclaw.todo.utils.database.TaskDatabase;
+import com.lordierclaw.todo.utils.database.taskgroup.TaskGroupDatabase;
+import com.lordierclaw.todo.utils.sharedprefs.SharedPrefsManager;
+import com.lordierclaw.todo.utils.database.task.TaskDatabase;
 
 public class MainApplication extends Application {
 
@@ -15,6 +16,7 @@ public class MainApplication extends Application {
         super.onCreate();
         SharedPrefsManager.init(getApplicationContext());
         TaskDatabase.initExecutor(8);
+        TaskGroupDatabase.initExecutor(4);
         try {
             User.setInstance(SharedPrefsManager.getInstance().getUserAccount());
         } catch (Exception e) {
