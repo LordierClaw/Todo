@@ -17,6 +17,7 @@ import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.listener.ITaskCheckBoxListener;
 import com.lordierclaw.todo.listener.ITaskLayoutListener;
 import com.lordierclaw.todo.model.Task;
+import com.lordierclaw.todo.utils.TaskCalendar;
 
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     private ITaskLayoutListener iTaskLayoutListener;
@@ -81,12 +82,20 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
         public void bind(Task task) {
             taskCheckBox.setText(task.getName());
             taskCheckBox.setChecked(task.isCompleted());
-            taskDateText.setText(task.getDateString());
-            taskGroupText.setText(task.getGroup().toString());
-            if (task.getDateString().equals("") ) taskDateText.setVisibility(View.GONE);
-            else taskDateText.setVisibility(View.VISIBLE);
-            if (task.getGroup().toString().equals("")) taskGroupText.setVisibility(View.GONE);
-            else taskGroupText.setVisibility(View.VISIBLE);
+            if (task.getDate() == null) {
+                taskDateText.setText("");
+                taskDateText.setVisibility(View.GONE);
+            } else {
+                taskDateText.setText(TaskCalendar.formatDate(task.getDate()));
+                taskDateText.setVisibility(View.VISIBLE);
+            }
+            if (task.getGroup() == null) {
+                taskGroupText.setText("");
+                taskGroupText.setVisibility(View.GONE);
+            } else {
+                taskGroupText.setText(task.getGroup().getName());
+                taskGroupText.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

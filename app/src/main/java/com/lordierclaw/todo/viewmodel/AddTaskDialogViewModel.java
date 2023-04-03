@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.lordierclaw.todo.R;
 import com.lordierclaw.todo.model.Task;
 import com.lordierclaw.todo.model.TaskGroup;
+import com.lordierclaw.todo.utils.TaskCalendar;
 import com.lordierclaw.todo.utils.database.task.TaskRepository;
 
 import java.util.Date;
@@ -47,7 +48,7 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
     public String getDateString() {
         if (selectedDate.getValue() == null)
             return getApplication().getResources().getString(R.string.new_task_date_text);
-        else return Task.dateFormat.format(selectedDate.getValue());
+        else return TaskCalendar.formatDate(selectedDate.getValue());
     }
 
     public void setGroup(TaskGroup group) {

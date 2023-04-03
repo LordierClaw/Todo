@@ -18,8 +18,6 @@ public class Task implements Serializable {
     private Date date;
     private TaskGroup group;
     private boolean isCompleted;
-    @Ignore
-    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public Task(String name, Date date, TaskGroup group) {
         this.name = name;
@@ -55,11 +53,6 @@ public class Task implements Serializable {
         return date;
     }
 
-    public String getDateString() {
-        if (date == null) return "";
-        return Task.dateFormat.format(date);
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
@@ -75,7 +68,7 @@ public class Task implements Serializable {
     public boolean equals(Task task) {
         if (task == null) return false;
         boolean isNameEqual = name.equals(task.getName());
-        boolean isDateEqual = getDateString().equals(task.getDateString());
+        boolean isDateEqual = date.getTime() == task.getDate().getTime();
         boolean isGroupEqual = group.equals(task.getGroup());
         return isNameEqual && isDateEqual && isGroupEqual;
     }

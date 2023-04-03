@@ -1,8 +1,7 @@
 package com.lordierclaw.todo.adapter;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.view.ContextThemeWrapper;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +10,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lordierclaw.todo.R;
-import com.lordierclaw.todo.listener.IMenuListener;
 import com.lordierclaw.todo.model.CustomMenuItem;
-import com.lordierclaw.todo.model.TaskGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuAdapter extends ListAdapter<CustomMenuItem, MenuAdapter.ViewHolder> {
-    private IMenuListener iMenuListener;
-    private Context mContext;
     private MenuAdapter.ViewHolder lastHolder = null;
+    private final TypedValue colorChecked;
 
     public MenuAdapter(Context mContext) {
         super(DIFF_CALLBACK);
-        this.mContext = mContext;
+        colorChecked = new TypedValue();
+        mContext.getTheme().resolveAttribute(com.google.android.material.R.attr.colorSecondaryContainer, colorChecked, true);
     }
 
     @NonNull
@@ -50,15 +43,12 @@ public class MenuAdapter extends ListAdapter<CustomMenuItem, MenuAdapter.ViewHol
             item.getListener().onClick();
             if (lastHolder != null) {
                 getItem(lastHolder.getAbsoluteAdapterPosition()).setChecked(false);
+                lastHolder.menuLayout.setBackgroundColor(0);
             }
             item.setChecked(true);
             lastHolder = holder;
-            // TODO: set Checked and Unchecked Style. Maybe using custom view
+            holder.menuLayout.setBackgroundColor(colorChecked.data);
         });
-    }
-
-    public void setOnClickListener(IMenuListener listener) {
-        iMenuListener = listener;
     }
 
     public static final DiffUtil.ItemCallback<CustomMenuItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<CustomMenuItem>() {

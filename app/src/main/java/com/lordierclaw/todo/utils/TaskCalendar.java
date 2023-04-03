@@ -1,7 +1,10 @@
 package com.lordierclaw.todo.utils;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -55,5 +58,11 @@ public class TaskCalendar {
         calendar.set(y, m, d, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
+    }
+
+    @NonNull
+    public static String formatDate(Date date) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
     }
 }

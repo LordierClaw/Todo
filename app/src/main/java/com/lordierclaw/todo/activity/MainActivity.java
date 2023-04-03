@@ -98,10 +98,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMenuFromTaskGroup(List<TaskGroup> taskGroups) {
-        if (taskGroups.size() == 0) {
-            mViewModel.insertTaskGroup(new TaskGroup("Tasks"));
-            return;
-        }
         List<CustomMenuItem> itemList = new ArrayList<>();
         itemList.add(new CustomMenuItem(getDrawable(R.drawable.ic_my_day_24),"My Day", () -> {
             setFragmentView(listTaskFragment, "My Day");
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }));
         itemList.add(new CustomMenuItem(getDrawable(R.drawable.ic_home_24), "Tasks", () -> {
             setFragmentView(listTaskFragment, "Tasks");
-            listTaskFragment.setListType(taskGroups.get(0));
+            listTaskFragment.setListType(null);
         }));
         // TODO: Separated line
         for(int i = 1; i < taskGroups.size(); i++) {
