@@ -34,7 +34,7 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
     public String getGroupString() {
         if (mTask.getValue() == null || mTask.getValue().getGroup() == null)
             return getApplication().getResources().getString(R.string.new_task_group_text);
-        else return mTask.getValue().getGroup().toString();
+        else return mTask.getValue().getGroup().getName();
     }
 
     public String getDateString() {

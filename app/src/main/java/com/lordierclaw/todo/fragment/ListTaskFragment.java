@@ -65,7 +65,6 @@ public class ListTaskFragment extends Fragment {
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), tasks -> submitList(tasks));
     }
 
-
     public void setListType() {
         currentGroup = null;
         if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
