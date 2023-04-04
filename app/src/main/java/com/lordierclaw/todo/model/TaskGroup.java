@@ -5,10 +5,11 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(tableName = "task-group")
-public class TaskGroup {
+public class TaskGroup implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String name;

@@ -21,6 +21,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:popupTheme="@style/Widget.Material3.PopupMenu.Overflow"
+                app:menu="@menu/toolbar_menu"
                 app:title=""/>
 
         </com.google.android.material.appbar.AppBarLayout>

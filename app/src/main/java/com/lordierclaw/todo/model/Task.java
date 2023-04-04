@@ -1,14 +1,11 @@
 package com.lordierclaw.todo.model;
 
-import android.annotation.SuppressLint;
-
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(tableName = "task")
 public class Task implements Serializable {
@@ -65,11 +62,16 @@ public class Task implements Serializable {
         this.group = group;
     }
 
-    public boolean equals(Task task) {
-        if (task == null) return false;
-        boolean isNameEqual = name.equals(task.getName());
-        boolean isDateEqual = date.getTime() == task.getDate().getTime();
-        boolean isGroupEqual = group.equals(task.getGroup());
-        return isNameEqual && isDateEqual && isGroupEqual;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return isCompleted == task.isCompleted && Objects.equals(name, task.name) && Objects.equals(date, task.date) && Objects.equals(group, task.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, date, group, isCompleted);
     }
 }

@@ -32,39 +32,26 @@ public class TaskRepository {
     }
 
     public void insert(Task task) {
-        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                mTaskDAO.insert(task);
-            }
-        });
+        TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.insert(task));
     }
 
     public void update(Task task) {
-        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                mTaskDAO.update(task);
-            }
-        });
+        TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.update(task));
     }
 
     public void delete(Task task) {
-        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                mTaskDAO.delete(task);
-            }
-        });
+        TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.delete(task));
     }
 
     public void deleteAllData() {
-        TaskDatabase.getDatabaseExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                TaskDatabase.getInstance(mContext).clearAllTables();
-            }
-        });
+        TaskDatabase.getDatabaseExecutor().execute(() -> TaskDatabase.getInstance(mContext).clearAllTables());
     }
 
+    public void deleteAllInGroup(TaskGroup taskGroup) {
+        TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.deleteAllInGroup(taskGroup));
+    }
+
+    public void updateToNewGroup(TaskGroup oldGroup, TaskGroup newGroup) {
+        TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.updateToNewGroup(oldGroup, newGroup));
+    }
 }

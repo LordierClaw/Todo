@@ -1,6 +1,5 @@
 package com.lordierclaw.todo.fragment;
 
-import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -29,6 +28,7 @@ public class ListTaskFragment extends Fragment {
     private RecyclerView tasksRcv;
     private TaskAdapter taskAdapter;
     private ITaskLayoutListener iTaskLayoutListener;
+    private TaskGroup currentGroup;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class ListTaskFragment extends Fragment {
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), tasks -> submitList(tasks));
         tasksRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         tasksRcv.setAdapter(taskAdapter);
+        currentGroup = null;
         return mView;
     }
 
@@ -58,6 +59,7 @@ public class ListTaskFragment extends Fragment {
     }
 
     public void setListType(TaskGroup group) {
+        currentGroup = group;
         if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
         mViewModel.setTaskListByGroup(group);
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), tasks -> submitList(tasks));
@@ -65,8 +67,13 @@ public class ListTaskFragment extends Fragment {
 
 
     public void setListType() {
+        currentGroup = null;
         if (mViewModel.getTaskList().hasObservers()) mViewModel.getTaskList().removeObservers(getViewLifecycleOwner());
         mViewModel.setTaskListMyDay();
         mViewModel.getTaskList().observe(getViewLifecycleOwner(), tasks -> submitList(tasks));
+    }
+
+    public TaskGroup getCurrentGroup() {
+        return currentGroup;
     }
 }

@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
-import java.security.PublicKey;
-import java.util.List;
-
 public class SharedPrefs {
     public static final String SHARED_PREFS_NAME = "TODO_SHARED_PREFS";
     private final SharedPreferences sharedPreferences;
@@ -37,7 +34,7 @@ public class SharedPrefs {
     }
 
     public void clear() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
     }

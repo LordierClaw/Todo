@@ -29,7 +29,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         initBehaviour();
     }
 
-    void initUI() {
+    private void initUI() {
         accountLog = findPreference(getResources().getString(R.string.key_account_log));
         accountSync = findPreference(getResources().getString(R.string.key_account_sync));
         accountChangePfp = findPreference(getResources().getString(R.string.key_account_change_pfp));
@@ -39,7 +39,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         clearData = findPreference(getResources().getString(R.string.key_clear_data));
     }
 
-    void initBehaviour() {
+    private void initBehaviour() {
         // Set Default Value
         if (User.getInstance().isLocal()) {
             accountLog.setTitle(getResources().getString(R.string.settings_account_login));

@@ -14,9 +14,11 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SharedPrefsManager.init(getApplicationContext());
+        // Database
         TaskDatabase.initExecutor(8);
         TaskGroupDatabase.initExecutor(4);
+        // Share Preferences
+        SharedPrefsManager.init(getApplicationContext());
         try {
             User.setInstance(SharedPrefsManager.getInstance().getUserAccount());
         } catch (Exception e) {

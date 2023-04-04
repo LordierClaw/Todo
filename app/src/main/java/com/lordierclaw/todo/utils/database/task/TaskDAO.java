@@ -25,11 +25,17 @@ public interface TaskDAO {
     @Update
     void update(Task task);
 
-    @Query("SELECT * FROM task WHERE `group` = :taskGroup")
+    @Query("SELECT * FROM task WHERE `group` = :taskGroup OR (`group` IS NULL AND :taskGroup IS NULL)")
     LiveData<List<Task>> getList(TaskGroup taskGroup);
 
     @Query("SELECT * FROM task WHERE `date` = :date")
     LiveData<List<Task>> getList(Date date);
     @Query("SELECT * FROM task")
     LiveData<List<Task>> getAll();
+
+    @Query("DELETE FROM task WHERE `group` =:taskGroup")
+    void deleteAllInGroup(TaskGroup taskGroup);
+
+    @Query("UPDATE task SET `group` = :newGroup WHERE `group` = :oldGroup")
+    void updateToNewGroup(TaskGroup oldGroup, TaskGroup newGroup);
 }

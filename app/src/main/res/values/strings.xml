@@ -12,19 +12,27 @@
     <string name="new_task_group_text">Select group</string>
     <string name="new_task_date_text">Set due date</string>
 
+    <!--    Group Edit Layout-->
+    <string name="default_no_group">There is no group here, try adding something new!</string>
+    <string name="group_dialog_title_add">Add new group</string>
+    <string name="group_dialog_title_edit">Edit group</string>
+    <string name="group_dialog_add_btn_text">Add</string>
+    <string name="group_dialog_accept_btn_text">Accept</string>
+    <string name="group_dialog_cancel_btn_text">Cancel</string>
+    <string name="group_dialog_add_hint">Enter group\'s name</string>
+
     <!--    Navigation Drawer State-->
     <string name="nav_open">Open Menu</string>
     <string name="nav_close">Close Menu</string>
     <!--    Navigation Drawer Items-->
     <string name="nav_my_day">My Day</string>
-    <string name="nav_group_none">Tasks</string>
-    <string name="nav_group_home">Home</string>
-    <string name="nav_group_work">Work</string>
-    <string name="nav_group_education">Education</string>
-    <string name="nav_group_personal">Personal</string>
-    <string name="nav_group_college_club">College and Club</string>
+    <string name="nav_tasks">Tasks</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_about">About</string>
+
+    <!--    Toolbar Menu-->
+    <string name="edit_group">Edit group</string>
+    <string name="remove_group">Remove group</string>
 
     <!--    User-->
     <string name="default_user_name">User</string>
@@ -57,7 +65,4 @@
     <string name="key_generate_dummy_data">settings_generate_dummy_data</string>
     <string name="key_delete_all_task">settings_delete_all_task</string>
     <string name="key_clear_data">settings_clear_data</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

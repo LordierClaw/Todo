@@ -33,14 +33,6 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
     private TextView groupText, dateText;
     private ImageView groupRemoveButton, dateRemoveButton, taskDeleteButton;
 
-    public static TaskDetailsDialogFragment getInstance(Task task) {
-        TaskDetailsDialogFragment fragment = new TaskDetailsDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("TASK_TO_SHOW_DETAILS", task);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -86,6 +78,12 @@ public class TaskDetailsDialogFragment extends BottomSheetDialogFragment {
         groupRemoveButton.setOnClickListener(view -> mViewModel.setTaskGroup(null));
         dateRemoveButton.setOnClickListener(view -> mViewModel.setTaskDate(null));
         taskDeleteButton.setOnClickListener(view -> deleteTask());
+    }
+
+    public void putTask(Task task) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("TASK_TO_SHOW_DETAILS", task);
+        this.setArguments(bundle);
     }
 
     private void deleteTask() {

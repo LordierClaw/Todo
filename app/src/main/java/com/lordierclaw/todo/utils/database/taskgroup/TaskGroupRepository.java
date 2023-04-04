@@ -20,11 +20,14 @@ public class TaskGroupRepository {
     }
 
     public void insert(TaskGroup taskGroup) {
-        TaskGroupDatabase.getDatabaseExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                mDAO.insert(taskGroup);
-            }
-        });
+        TaskGroupDatabase.getDatabaseExecutor().execute(() -> mDAO.insert(taskGroup));
+    }
+
+    public void update(TaskGroup taskGroup) {
+        TaskGroupDatabase.getDatabaseExecutor().execute(() -> mDAO.update(taskGroup));
+    }
+
+    public void delete(TaskGroup taskGroup) {
+        TaskGroupDatabase.getDatabaseExecutor().execute(() -> mDAO.delete(taskGroup));
     }
 }

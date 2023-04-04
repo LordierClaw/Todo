@@ -37,12 +37,7 @@ public class GroupAdapter extends ListAdapter<TaskGroup, GroupAdapter.ViewHolder
         TaskGroup group = getItem(position);
         if (group == null) return;
         holder.bind(group);
-        holder.groupRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iGroupListener.onClick(group, holder.getAbsoluteAdapterPosition());
-            }
-        });
+        holder.groupRelativeLayout.setOnClickListener(view -> iGroupListener.onClick(group, holder.getAbsoluteAdapterPosition()));
     }
 
     public static final DiffUtil.ItemCallback<TaskGroup> DIFF_CALLBACK = new DiffUtil.ItemCallback<TaskGroup>() {
@@ -63,7 +58,7 @@ public class GroupAdapter extends ListAdapter<TaskGroup, GroupAdapter.ViewHolder
         private final TextView groupName;
         public ViewHolder(@NonNull View view) {
             super(view);
-            groupRelativeLayout = view.findViewById(R.id.groupRelativeLayout);
+            groupRelativeLayout = view.findViewById(R.id.adapter_group_layout);
             groupIcon = view.findViewById(R.id.adapter_group_icon);
             groupName = view.findViewById(R.id.adapter_group_name);
         }
