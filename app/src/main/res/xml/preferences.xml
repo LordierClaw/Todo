@@ -22,9 +22,6 @@
 
     <androidx.preference.PreferenceCategory android:title="@string/settings_debug_group">
         <androidx.preference.Preference
-            android:key="@string/key_generate_dummy_data"
-            android:title="@string/settings_generate_dummy_data"/>
-        <androidx.preference.Preference
             android:key="@string/key_delete_all_task"
             android:title="@string/settings_delete_all_task"/>
         <androidx.preference.Preference

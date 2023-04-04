@@ -10,8 +10,10 @@ import java.util.List;
 
 public class TaskGroupRepository {
     private final TaskGroupDAO mDAO;
+    private Context mContext;
 
     public TaskGroupRepository(Context mContext) {
+        this.mContext = mContext;
         mDAO = TaskGroupDatabase.getInstance(mContext).taskGroupDAO();
     }
 
@@ -29,5 +31,9 @@ public class TaskGroupRepository {
 
     public void delete(TaskGroup taskGroup) {
         TaskGroupDatabase.getDatabaseExecutor().execute(() -> mDAO.delete(taskGroup));
+    }
+
+    public void deleteAllData() {
+        TaskGroupDatabase.getDatabaseExecutor().execute(() -> TaskGroupDatabase.getInstance(mContext).clearAllTables());
     }
 }

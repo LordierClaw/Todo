@@ -54,15 +54,14 @@
     <string name="settings_general_group">General</string>
     <string name="settings_dark_mode">Dark Mode</string>
     <string name="settings_debug_group">Debug</string>
-    <string name="settings_generate_dummy_data">Generate Dummy Data</string>
     <string name="settings_delete_all_task">Delete All Tasks</string>
     <string name="settings_clear_data">Clear Data</string>
+    <string name="settings_not_available">This feature isn\'t available yet</string>
     <!--    Settings Preferences Key-->
     <string name="key_account_log">settings_account_log</string>
     <string name="key_account_sync">settings_account_sync</string>
     <string name="key_account_change_pfp">settings_change_pfp</string>
     <string name="key_dark_mode">settings_dark_mode</string>
-    <string name="key_generate_dummy_data">settings_generate_dummy_data</string>
     <string name="key_delete_all_task">settings_delete_all_task</string>
     <string name="key_clear_data">settings_clear_data</string>
 </resources>

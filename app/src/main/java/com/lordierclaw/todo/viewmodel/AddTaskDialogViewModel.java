@@ -27,14 +27,14 @@ public class AddTaskDialogViewModel extends AndroidViewModel {
 
     public MutableLiveData<TaskGroup> getSelectedGroup() {
         if (selectedGroup == null) {
-            selectedGroup = new MutableLiveData<TaskGroup>(null);
+            selectedGroup = new MutableLiveData<>(null);
         }
         return selectedGroup;
     }
 
     public MutableLiveData<Date> getSelectedDate() {
         if (selectedDate == null) {
-            selectedDate = new MutableLiveData<Date>(null);
+            selectedDate = new MutableLiveData<>(null);
         }
         return selectedDate;
     }

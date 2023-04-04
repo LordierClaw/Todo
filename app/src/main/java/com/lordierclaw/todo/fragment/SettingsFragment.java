@@ -1,6 +1,8 @@
 package com.lordierclaw.todo.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -19,7 +21,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private Preference accountLog, accountSync, accountChangePfp;
     private SwitchPreference darkModeSwitch;
-    private Preference generateDummyData, deleteAllTask, clearData;
+    private Preference deleteAllTask, clearData;
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
@@ -34,7 +36,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         accountSync = findPreference(getResources().getString(R.string.key_account_sync));
         accountChangePfp = findPreference(getResources().getString(R.string.key_account_change_pfp));
         darkModeSwitch = findPreference(getResources().getString(R.string.key_dark_mode));
-        generateDummyData = findPreference(getResources().getString(R.string.key_generate_dummy_data));
         deleteAllTask = findPreference(getResources().getString(R.string.key_delete_all_task));
         clearData = findPreference(getResources().getString(R.string.key_clear_data));
     }
@@ -52,13 +53,29 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
         darkModeSwitch.setChecked(mViewModel.isDarkMode());
         // Event
-        if (User.getInstance().isLocal()) accountLog.setOnPreferenceClickListener(preference -> mViewModel.logIn());
-        else accountLog.setOnPreferenceClickListener(preference -> mViewModel.logOut());
-        accountSync.setOnPreferenceClickListener(preference -> mViewModel.sync());
+        if (User.getInstance().isLocal()) accountLog.setOnPreferenceClickListener(preference -> showNotAvailableMsg());
+        else accountLog.setOnPreferenceClickListener(preference -> showNotAvailableMsg());
+        accountSync.setOnPreferenceClickListener(preference -> showNotAvailableMsg());
+        accountChangePfp.setOnPreferenceClickListener(preference -> showNotAvailableMsg());
         darkModeSwitch.setOnPreferenceClickListener(preference -> darkModeOnClick());
-        generateDummyData.setOnPreferenceClickListener(preference -> mViewModel.generateDummyData());
         deleteAllTask.setOnPreferenceClickListener(preference -> mViewModel.deleteAllTasks());
-        clearData.setOnPreferenceClickListener(preference -> mViewModel.clearData());
+        clearData.setOnPreferenceClickListener(preference -> {
+            Toast.makeText(getContext(), "This application will close to clear data...", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mViewModel.clearData();
+                    getActivity().finish();
+                    System.exit(0);
+                }
+            }, 2000);
+            return true;
+        });
+    }
+
+    private boolean showNotAvailableMsg() {
+        Toast.makeText(getContext(), getString(R.string.settings_not_available), Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     private boolean darkModeOnClick() {

@@ -43,15 +43,15 @@ public class TaskRepository {
         TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.delete(task));
     }
 
-    public void deleteAllData() {
-        TaskDatabase.getDatabaseExecutor().execute(() -> TaskDatabase.getInstance(mContext).clearAllTables());
-    }
-
     public void deleteAllInGroup(TaskGroup taskGroup) {
         TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.deleteAllInGroup(taskGroup));
     }
 
     public void updateToNewGroup(TaskGroup oldGroup, TaskGroup newGroup) {
         TaskDatabase.getDatabaseExecutor().execute(() -> mTaskDAO.updateToNewGroup(oldGroup, newGroup));
+    }
+
+    public void deleteAllData() {
+        TaskDatabase.getDatabaseExecutor().execute(() -> TaskDatabase.getInstance(mContext).clearAllTables());
     }
 }

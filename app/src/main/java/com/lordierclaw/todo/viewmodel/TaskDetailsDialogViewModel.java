@@ -26,7 +26,7 @@ public class TaskDetailsDialogViewModel extends AndroidViewModel {
 
     public MutableLiveData<Task> getTask() {
         if (mTask == null) {
-            mTask = new MutableLiveData<Task>(null);
+            mTask = new MutableLiveData<>(null);
         }
         return mTask;
     }
